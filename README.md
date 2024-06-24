@@ -1,2 +1,3 @@
-# identifiability_w_reward_machines
-Study of IRL identifiability with reward machines structure.
+# Identifiability of Reward Machines
+
+Study of IRL identifiability with a reward machines structure.
