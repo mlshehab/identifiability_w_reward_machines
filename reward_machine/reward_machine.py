@@ -4,8 +4,8 @@ This work includes code derived from the "reward_machines" project
 """
 
 
-from reward_functions import *
-from reward_machine_utils import evaluate_dnf, value_iteration
+from .reward_functions import *
+from .reward_machine_utils import evaluate_dnf, value_iteration
 import time
 
 class RewardMachine:
@@ -115,10 +115,10 @@ class RewardMachine:
             # Reading the transition
             u1, u2, dnf_formula, reward_function = eval(e)
             # terminal states
-            if u1 in terminal_states:
-                continue
-            if u2 in terminal_states:
-                u2  = self.terminal_u
+            # if u1 in terminal_states:
+            #     continue
+            # if u2 in terminal_states:
+            #     u2  = self.terminal_u
             # Adding machine state
             self._add_state([u1,u2])
             # Adding state-transition to delta_u
@@ -134,5 +134,5 @@ class RewardMachine:
     
     def _add_state(self, u_list):
         for u in u_list:
-            if u not in self.U and u != self.terminal_u:
+            if u not in self.U:
                 self.U.append(u)
