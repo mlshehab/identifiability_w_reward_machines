@@ -16,9 +16,10 @@ class RewardMachine:
         self.delta_u    = {} # state-transition function
         self.delta_r    = {} # reward-transition function
         self.terminal_u = -1  # All terminal states are sent to the same terminal state with id *-1*
+        self.t_count = 0 # counts the number of non-trivial transitions in the reward machine
         self._load_reward_machine(file)
         self.known_transitions = {} # Auxiliary variable to speed up computation of the next RM state
-
+         
     # Public methods -----------------------------------
 
     def add_reward_shaping(self, gamma, rs_gamma):
@@ -114,6 +115,8 @@ class RewardMachine:
         for e in lines[2:]:
             # Reading the transition
             u1, u2, dnf_formula, reward_function = eval(e)
+            if not u1 in terminal_states:
+                self.t_count +=1
             # terminal states
             # if u1 in terminal_states:
             #     continue

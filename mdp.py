@@ -1,6 +1,6 @@
 import numpy as np
 from reward_machine.reward_machine import RewardMachine
-
+import scipy.linalg
 class MDP(object):
     def __init__(self, n_states, n_actions, P, gamma, horizon):
         self.n_states = n_states
@@ -90,9 +90,11 @@ P = [Pa1,Pa2,Pa3,Pa4]
 mdp = MDP(n_states=6,n_actions=4,P = P,gamma = 0.9,horizon=10)
 rm = RewardMachine("./rm1.txt")
 print(rm.delta_u)
-# print("rm_s: ", len(rm.U))
+print("rm_s: ", len(rm.U))
 
 L = {}
+
+# TODO: specify what to do when a state doesn't have label
 
 L[0] = 'f'  # food
 L[1] = 'r1' # room 1
@@ -103,3 +105,92 @@ L[5] = 'r3' # room 3
 
 mdpRM = MDPRM(mdp,rm,L)
 newMDP = mdpRM.construct_product()
+
+
+def S_prime_redistribution(mdpRM : MDPRM):
+    mdp = mdpRM.mdp
+    rm = mdpRM.rm
+    L = mdpRM.L
+
+    # find the number of transitions in the reward machine
+    
+    B = []
+
+    for u in range(len(rm.U) - 1): # -1 because we're eliminating the terminal state
+        # find the connectivity of u
+        potential_u_prime = rm.delta_u[u]
+
+        B_u = np.zeros((mdp.n_states*mdp.n_actions, len(potential_u_prime))) 
+        
+        for i, u_prime in enumerate(potential_u_prime):
+
+            
+            for s in range(mdp.n_states):
+                for a in range(mdp.n_actions):
+
+                    for s_prime in range(mdp.n_states):
+                        if u_prime == rm._compute_next_state(u,L[s_prime]):
+                            B_u[s + a*mdp.n_states, i] += mdp.P[a][s,s_prime]
+
+        # print(f"B({u}): ", B_u)    
+        # print(f"B({u}) is of shape: {mdp.n_states*mdp.n_actions}x{len(potential_u_prime)}")
+        # print(f"B({u}) is of rank: {np.linalg.matrix_rank(B_u)}")
+
+        B.append(B_u)
+    
+    return B
+
+S_prime_redistribution(mdpRM)
+
+def d(P):
+    m,n = P.shape
+    dP = np.zeros((m,m*n))
+    for i in range(m):
+        dP[i,n*i:n*(i+1)] = P[i]
+    return dP
+
+# t = np.array([[1,2,4],[3,2,4],[1,6,6],[1,2,0],[-1,-1,-1]])
+# print(d(t))
+
+def L4DC_equivalence_class(mdpRM : MDPRM):
+    
+    mdp = mdpRM.mdp
+    rm  =  mdpRM.rm
+    L = mdpRM.L
+
+    prodMDP = mdpRM.construct_product()
+    # construct the P matrix of the product
+    P = prodMDP.P[0]
+    E = np.eye(prodMDP.n_states)
+    for a in range(1,prodMDP.n_actions):
+        P = np.vstack((P,prodMDP.P[a]))
+        E = np.vstack((E, np.eye(prodMDP.n_states)))
+
+    Psi = d(P)
+    dim_r = Psi.shape[1]
+    print(f"dim_r  = {dim_r}")
+    A = np.hstack((Psi, -E + prodMDP.gamma*P))
+    print("A: ", A.shape)
+    print("A rank: ", np.linalg.matrix_rank(A))
+    K = scipy.linalg.null_space(A)
+    print("K: ", K.shape)
+    projected_K = K[:dim_r,:]
+
+    print(f"The dimension of the equivalence is: {np.linalg.matrix_rank(projected_K)}")
+  
+L4DC_equivalence_class(mdpRM)
+print(6*6*4*3*3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
