@@ -107,6 +107,10 @@ mdpRM = MDPRM(mdp,rm,L)
 newMDP = mdpRM.construct_product()
 
 
+
+
+
+
 def S_prime_redistribution(mdpRM : MDPRM):
     mdp = mdpRM.mdp
     rm = mdpRM.rm
@@ -167,19 +171,31 @@ def L4DC_equivalence_class(mdpRM : MDPRM):
         E = np.vstack((E, np.eye(prodMDP.n_states)))
 
     Psi = d(P)
-    dim_r = Psi.shape[1]
-    print(f"dim_r  = {dim_r}")
-    A = np.hstack((Psi, -E + prodMDP.gamma*P))
-    print("A: ", A.shape)
-    print("A rank: ", np.linalg.matrix_rank(A))
+
+    # Find columns that are not all zeros
+    non_zero_columns = np.any(Psi != 0, axis=0)
+
+    # Filter the matrix to only include those columns
+    filtered_matrix_Psi = Psi[:, non_zero_columns]
+    
+    print(f"The filtered Psi matrix is of shape: {filtered_matrix_Psi.shape}")
+    print(f"The shape of its kernel is: {scipy.linalg.null_space(filtered_matrix_Psi).shape}")
+
+
+    dim_r = filtered_matrix_Psi.shape[1]
+    print(f"dim_r = {dim_r}")
+    # print(f"dim_r  = {dim_r}")
+    A = np.hstack((filtered_matrix_Psi, -E + prodMDP.gamma*P))
+    # print("A: ", A.shape)
+    # print("A rank: ", np.linalg.matrix_rank(A))
     K = scipy.linalg.null_space(A)
     print("K: ", K.shape)
     projected_K = K[:dim_r,:]
 
-    print(f"The dimension of the equivalence is: {np.linalg.matrix_rank(projected_K)}")
+    print(f"The dimension of the L4DC equivalence is: {np.linalg.matrix_rank(projected_K)}")
   
 L4DC_equivalence_class(mdpRM)
-print(6*6*4*3*3)
+# print(6*6*4*3*3)
 
 
 
