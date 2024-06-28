@@ -16,10 +16,11 @@ class RewardMachine:
         self.delta_u    = {} # state-transition function
         self.delta_r    = {} # reward-transition function
         self.terminal_u = -1  # All terminal states are sent to the same terminal state with id *-1*
-        self.t_count = 0 # counts the number of non-trivial transitions in the reward machine
+        self.terminal_states = None
+        self.t_count = 0 # counts the number of transitions in the reward machine
         self._load_reward_machine(file)
         self.known_transitions = {} # Auxiliary variable to speed up computation of the next RM state
-         
+        self.n_states = len(self.U)
     # Public methods -----------------------------------
 
     def add_reward_shaping(self, gamma, rs_gamma):
@@ -32,7 +33,6 @@ class RewardMachine:
         self.potentials = value_iteration(self.U, self.delta_u, self.delta_r, self.terminal_u, rs_gamma)
         for u in self.potentials:
             self.potentials[u] = -self.potentials[u]
-
 
     def reset(self):
         # Returns the initial state
@@ -111,6 +111,7 @@ class RewardMachine:
         # setting the DFA
         self.u0 = eval(lines[0])
         terminal_states = eval(lines[1])
+        self.terminal_states = terminal_states
         # adding transitions
         for e in lines[2:]:
             # Reading the transition
@@ -139,3 +140,20 @@ class RewardMachine:
         for u in u_list:
             if u not in self.U:
                 self.U.append(u)
+
+    def replace_values_with_positions(self):
+        # Step 1: Extract all unique values
+        d = self.delta_u
+        unique_values = []
+        for outer_key in d:
+            for inner_key in d[outer_key]:
+                value = d[outer_key][inner_key]
+                if value not in unique_values:
+                    unique_values.append(value)
+
+        # Step 2: Create a mapping from each unique value to its position
+        value_to_position = {value: idx for idx, value in enumerate(unique_values)}
+
+        # Step 3: Replace the values in the dictionary using the mapping
+        new_d = {outer_key: {inner_key: value_to_position[d[outer_key][inner_key]] for inner_key in d[outer_key]} for outer_key in d}    
+        return new_d

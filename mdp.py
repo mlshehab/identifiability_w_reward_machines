@@ -144,7 +144,7 @@ def S_prime_redistribution(mdpRM : MDPRM):
     
     return B
 
-S_prime_redistribution(mdpRM)
+# S_prime_redistribution(mdpRM)
 
 def d(P):
     m,n = P.shape
@@ -155,6 +155,69 @@ def d(P):
 
 # t = np.array([[1,2,4],[3,2,4],[1,6,6],[1,2,0],[-1,-1,-1]])
 # print(d(t))
+
+def ppec(mdpRM: MDPRM):
+    # Policy Preserving Equivalence Class
+    mdp = mdpRM.mdp
+    rm  =  mdpRM.rm
+    L = mdpRM.L
+
+    card_delta_u = rm.t_count
+    print(f"The reward machines has {rm.n_states} states ")
+    # costruct Psi
+    prodMDP = mdpRM.construct_product()
+    P = prodMDP.P[0]
+    E = np.eye(prodMDP.n_states)
+    for a in range(1,prodMDP.n_actions):
+        P = np.vstack((P,prodMDP.P[a]))
+        E = np.vstack((E, np.eye(prodMDP.n_states)))
+    
+    Psi = d(P)
+    # print(max(Psi@np.ones((Psi.shape[1],1))))
+    # construct F
+    row_F = (mdp.n_states**2)*(rm.n_states**2)*mdp.n_actions
+    col_F = card_delta_u
+    F = np.zeros(shape = (row_F,col_F))
+    
+    delta = rm.replace_values_with_positions()
+    print(delta)
+    print("The terminal state isL : ", rm.terminal_states)
+    for a in range(mdp.n_actions):
+        for u in range(rm.n_states):
+            for s in range(mdp.n_actions):
+                for u_prime in range(rm.n_states):
+                    for s_prime in range(mdp.n_actions):
+                        if not u in rm.terminal_states: 
+                            try:
+                                # if u == 1 and u_prime == 2:
+                                #     print("YOL:", delta[u][u_prime] )
+                                F[s_prime + u_prime*mdp.n_states + s*mdp.n_states*rm.n_states + \
+                                    u*(mdp.n_states**2)*rm.n_states + a*(mdp.n_states**2)*(rm.n_states**2) , delta[u][u_prime] ] = 1
+                            except KeyError:
+                                continue
+    # Find rows of F that are not all zeros
+    non_zero_rows_F = np.any(F != 0, axis=1)
+
+    # Filter the matrix to only include those columns
+    F = F[non_zero_rows_F, :]
+
+    # Find columns that are not all zeros
+    non_zero_columns_Psi = np.any(Psi != 0, axis=0)
+
+    # Filter the matrix to only include those columns
+    Psi = Psi[:, non_zero_columns_Psi]
+    print(Psi.shape)  
+    print(F.shape)               
+    prod = Psi@F
+    print(F.shape)
+    print(prod)
+    # for a in range(mdp.n_actions):
+    #     for u in range()
+    # for s in range(mdp.n_states):
+
+ppec(mdpRM)
+
+
 
 def L4DC_equivalence_class(mdpRM : MDPRM):
     
@@ -194,7 +257,7 @@ def L4DC_equivalence_class(mdpRM : MDPRM):
 
     print(f"The dimension of the L4DC equivalence is: {np.linalg.matrix_rank(projected_K)}")
   
-L4DC_equivalence_class(mdpRM)
+# L4DC_equivalence_class(mdpRM)
 # print(6*6*4*3*3)
 
 
