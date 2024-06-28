@@ -184,32 +184,34 @@ def ppec(mdpRM: MDPRM):
     print("The terminal state isL : ", rm.terminal_states)
     for a in range(mdp.n_actions):
         for u in range(rm.n_states):
-            for s in range(mdp.n_actions):
+            for s in range(mdp.n_states):
                 for u_prime in range(rm.n_states):
-                    for s_prime in range(mdp.n_actions):
+                    for s_prime in range(mdp.n_states):
                         if not u in rm.terminal_states: 
                             try:
                                 # if u == 1 and u_prime == 2:
-                                #     print("YOL:", delta[u][u_prime] )
+                                #     print("YOL:", delta[u][u_prime])
                                 F[s_prime + u_prime*mdp.n_states + s*mdp.n_states*rm.n_states + \
                                     u*(mdp.n_states**2)*rm.n_states + a*(mdp.n_states**2)*(rm.n_states**2) , delta[u][u_prime] ] = 1
                             except KeyError:
                                 continue
-    # Find rows of F that are not all zeros
-    non_zero_rows_F = np.any(F != 0, axis=1)
+   
+    # # prune F and Psi
+    # F = F[~np.all(F == 0, axis=1)]
+    # Psi = Psi[:, ~np.all(Psi == 0, axis=0)]
 
-    # Filter the matrix to only include those columns
-    F = F[non_zero_rows_F, :]
+    print("The pruned F shape is: ", F.shape)
+    print("The pruned Psi shape is: ", Psi.shape)
+    # print("Psi:", Psi[0,:19]) 
+    # print("F: ", F[:19,0])  
+    # # Find columns that are not all zeros
+    # non_zero_columns_Psi = np.any(Psi != 0, axis=0)
 
-    # Find columns that are not all zeros
-    non_zero_columns_Psi = np.any(Psi != 0, axis=0)
-
-    # Filter the matrix to only include those columns
-    Psi = Psi[:, non_zero_columns_Psi]
-    print(Psi.shape)  
-    print(F.shape)               
+    # # Filter the matrix to only include those columns
+    # Psi = Psi[:, non_zero_columns_Psi]
+               
     prod = Psi@F
-    print(F.shape)
+
     print(prod)
     # for a in range(mdp.n_actions):
     #     for u in range()
@@ -217,6 +219,10 @@ def ppec(mdpRM: MDPRM):
 
 ppec(mdpRM)
 
+
+
+
+# print(matrix[~np.all(matrix == 0, axis=1)])
 
 
 def L4DC_equivalence_class(mdpRM : MDPRM):
