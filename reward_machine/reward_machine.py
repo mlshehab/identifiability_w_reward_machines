@@ -116,8 +116,8 @@ class RewardMachine:
         for e in lines[2:]:
             # Reading the transition
             u1, u2, dnf_formula, reward_function = eval(e)
-            if not u1 in terminal_states:
-                self.t_count +=1
+            # if not u1 in terminal_states:
+            self.t_count +=1
             # terminal states
             # if u1 in terminal_states:
             #     continue
