@@ -1,6 +1,7 @@
 import numpy as np
 from reward_machine.reward_machine import RewardMachine
 import scipy.linalg
+
 class MDP(object):
     def __init__(self, n_states, n_actions, P, gamma, horizon):
         self.n_states = n_states
@@ -14,9 +15,17 @@ class MDPRM(object):
     def __init__(self, mdp : MDP, rm : RewardMachine, L : dict):
         self.mdp = mdp 
         self.rm = rm
-        self.L = L 
+        self.L = L
         
-    
+    def sua_pair_from_i(self,i):
+        a = i // (self.mdp.n_states*self.rm.n_states)
+        r = i % (self.mdp.n_states*self.rm.n_states)
+        u = r // self.mdp.n_states
+        s = r % self.mdp.n_states
+        return (s,u,a)
+
+
+
     def su_pair_from_s(self,i):
        
         return  ( i % self.mdp.n_states ,  i  // self.mdp.n_states)  # (s,u) pair

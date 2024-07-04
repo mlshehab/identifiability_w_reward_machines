@@ -20,6 +20,7 @@ def ppec(mdpRM: MDPRM):
     L = mdpRM.L
 
     card_delta_u = rm.t_count
+
     print(f"Cardinality is: {card_delta_u}")
     print(f"The reward machines has {rm.n_states} states ")
     # costruct Psi
@@ -64,13 +65,27 @@ def ppec(mdpRM: MDPRM):
     print("The pruned Psi shape is: ", Psi.shape)
                
     prod = Psi@F
-    print(prod)
+    # print(prod)
     A = np.hstack((prod, -E + mdp.gamma*P))
     print("A shape: ", A.shape)
-    print("A rank: ", np.linalg.matrix_rank(A))
-    # for a in range(mdp.n_actions):
-    #     for u in range()
-    # for s in range(mdp.n_states):
+    print("A rank: ", np.linalg.matrix_rank(A, tol = 0.0001))
+
+    # # compute product in closed form
+    # test = np.zeros_like(prod)
+    # n_rows, n_cols = prod.shape
+    # for i in range(n_rows):
+    #     (s,u,a) = mdpRM.sua_pair_from_i(i)
+    #     for j in range(n_cols):
+    #         for s_prime in range(mdp.n_states):
+    #             for u_prime in range(rm.n_states):
+    #                 try:
+    #                     if delta[u][u_prime] == j:
+    #                         test[i,j] += prodMDP.P[a][s,s_prime]
+    #                 except KeyError:
+    #                     continue
+    # # print(prod)
+    # print(test)
+    # # print(np.round(prod - test,3))
 
 
 
@@ -132,7 +147,8 @@ if __name__ == '__main__':
 
     mdpRM = MDPRM(mdp,rm,L)
     newMDP = mdpRM.construct_product()
-
+    # for i in range(newMDP.n_states*newMDP.n_actions):
+    #     print(f" i = {i}, (s,u,a) = {mdpRM.sua_pair_from_i(i)}")
     ppec(mdpRM)
 
 
