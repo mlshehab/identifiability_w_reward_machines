@@ -2,7 +2,7 @@ import numpy as np
 from mdp import MDP, MDPRM
 from reward_machine.reward_machine import RewardMachine
 import scipy.linalg
-
+import time 
 def d(P):
     m,n = P.shape
     dP = np.zeros((m,m*n))
@@ -42,6 +42,7 @@ def ppec(mdpRM: MDPRM):
     print(delta)
     print("The terminal state is : ", rm.terminal_states)
 
+    
     for a in range(mdp.n_actions):
         for u in range(rm.n_states):
             for s in range(mdp.n_states):
@@ -63,29 +64,40 @@ def ppec(mdpRM: MDPRM):
     
     print("The pruned F shape is: ", F.shape)
     print("The pruned Psi shape is: ", Psi.shape)
-               
+    start_time_prod = time.time()      
     prod = Psi@F
+    end_time_prod = time.time()
     # print(prod)
     A = np.hstack((prod, -E + mdp.gamma*P))
     print("A shape: ", A.shape)
     print("A rank: ", np.linalg.matrix_rank(A, tol = 0.0001))
 
-    # # compute product in closed form
-    # test = np.zeros_like(prod)
-    # n_rows, n_cols = prod.shape
-    # for i in range(n_rows):
-    #     (s,u,a) = mdpRM.sua_pair_from_i(i)
-    #     for j in range(n_cols):
-    #         for s_prime in range(mdp.n_states):
-    #             for u_prime in range(rm.n_states):
-    #                 try:
-    #                     if delta[u][u_prime] == j:
-    #                         test[i,j] += prodMDP.P[a][s,s_prime]
-    #                 except KeyError:
-    #                     continue
-    # # print(prod)
+    # compute product in closed form
+    start_time_closed = time.time()
+    test = np.zeros_like(prod)
+    n_rows, n_cols = prod.shape
+    for i in range(n_rows):
+        (s,u,a) = mdpRM.sua_pair_from_i(i)
+        for j in range(n_cols):
+            # print(f"j = {j}")
+            for s_prime in range(mdp.n_states):
+                for u_prime in range(rm.n_states):
+                    # print(f"u_prime= {u_prime}")
+                    try:
+                        if delta[u][u_prime] == j:
+                            # print(f"delta[{u}][{u_prime}] = {delta[u][u_prime]} and j = {j} and i = {i}")
+                            prod_mdp_s = mdpRM.s_from_su_pair((s,u))
+                            prod_mdp_s_prime = mdpRM.s_from_su_pair((s_prime,u_prime))
+                            test[i,j] += prodMDP.P[a][prod_mdp_s,prod_mdp_s_prime]
+                    except KeyError:
+                        continue
     # print(test)
-    # # print(np.round(prod - test,3))
+    # print("PROD", prod)
+    # print(test)
+    end_time_closed = time.time()
+    print(f"Time taken by PsiF: {-start_time_prod + end_time_prod:.6f} seconds")
+    print(f"Time taken by Closed: {-start_time_closed + end_time_closed:.6f} seconds")
+    # print(np.round(prod - test,3))
 
 
 
