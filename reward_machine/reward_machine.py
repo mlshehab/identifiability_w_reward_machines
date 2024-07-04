@@ -3,7 +3,7 @@ This work includes code derived from the "reward_machines" project
 (https://github.com/RodrigoToroIcarte/reward_machines)
 """
 
-
+import copy
 from .reward_functions import *
 from .reward_machine_utils import evaluate_dnf, value_iteration
 import time
@@ -144,16 +144,13 @@ class RewardMachine:
     def replace_values_with_positions(self):
         # Step 1: Extract all unique values
         d = self.delta_u
-        unique_values = []
+        # unique_values = []
+        value_to_position = {}
+        new_d = copy.deepcopy(d)
+        ctr = 0
         for outer_key in d:
             for inner_key in d[outer_key]:
-                value = d[outer_key][inner_key]
-                if value not in unique_values:
-                    unique_values.append(value)
-
-        # Step 2: Create a mapping from each unique value to its position
-        value_to_position = {value: idx for idx, value in enumerate(unique_values)}
-
-        # Step 3: Replace the values in the dictionary using the mapping
-        new_d = {outer_key: {inner_key: value_to_position[d[outer_key][inner_key]] for inner_key in d[outer_key]} for outer_key in d}    
+                new_d[outer_key][inner_key] = ctr 
+                ctr+=1
+           
         return new_d

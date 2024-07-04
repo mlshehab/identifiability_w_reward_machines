@@ -142,9 +142,9 @@ if __name__ == '__main__':
     P = [Pa1,Pa2,Pa3,Pa4]
 
     mdp = MDP(n_states=6,n_actions=4,P = P,gamma = 0.9,horizon=10)
-    rm = RewardMachine("./rm1.txt")
-    # print(rm.delta_u)
-    # print("rm_s: ", len(rm.U))
+    rm = RewardMachine("./rmc.txt")
+    print(rm.delta_u)
+    
 
     L = {}
 
