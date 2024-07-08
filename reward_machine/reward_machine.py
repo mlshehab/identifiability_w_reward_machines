@@ -142,10 +142,9 @@ class RewardMachine:
                 self.U.append(u)
 
     def replace_values_with_positions(self):
-        # Step 1: Extract all unique values
+
         d = self.delta_u
-        # unique_values = []
-        value_to_position = {}
+        
         new_d = copy.deepcopy(d)
         ctr = 0
         for outer_key in d:
