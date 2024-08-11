@@ -90,3 +90,27 @@ Pa42 = np.array([
 sampleMDP2 = [Pa12,Pa22,Pa32,Pa42]
 
 
+
+
+Pa13 = np.zeros(shape = (n_states,n_states))
+
+Pa13[0][1] = 1.0
+Pa13[1][2] = 1.0
+Pa13[2][3] = 1.0
+Pa13[3][0] = 1.0
+
+Pa13[4][5] = 1.0
+Pa13[5][4] = 1.0
+
+Pa23 = np.zeros(shape = (n_states,n_states))
+
+Pa23[0][3] = 1.0
+Pa23[3][2] = 1.0
+Pa23[2][1] = 1.0
+Pa23[1][0] = 1.0
+
+Pa23[4][4] = 1.0
+Pa23[5][5] = 1.0
+
+
+sampleMDP3 = [Pa11,Pa21,Pa31,Pa41]

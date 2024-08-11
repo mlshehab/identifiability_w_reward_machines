@@ -39,9 +39,13 @@ class RewardMachine:
         return self.u0
 
     def _compute_next_state(self, u1, true_props):
-        for u2 in self.delta_u[u1]:
-            if evaluate_dnf(self.delta_u[u1][u2], true_props):
-                return u2
+        try:
+            for u2 in self.delta_u[u1]:
+                if evaluate_dnf(self.delta_u[u1][u2], true_props):
+                    return u2 
+        except KeyError as e:
+            # print("I'mhere ")
+            return self.terminal_u
         return self.terminal_u # no transition is defined for true_props
 
     def get_next_state(self, u1, true_props):
