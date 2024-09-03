@@ -7,6 +7,7 @@ from sample_mdps import sampleMDP1
 from scipy.special import softmax, logsumexp
 from GridWorld import BasicGridWorld
 from plot import plot_arrows
+import pprint
 
 class Node:
     def __init__(self, label,state, u, policy, is_root = False):
@@ -266,7 +267,7 @@ if __name__ == '__main__':
     #############
     #############
 
-    depth = 2
+    depth = 8
     Root = Node(label = None, state= None, u = None,policy = None , is_root= True)
     queue = [(Root, 0)]  # Queue of tuples (node, current_depth)
 
@@ -328,12 +329,20 @@ if __name__ == '__main__':
             if u not in self.delta_u:
                 self.delta_u[u] = {}
 
+            # check to see if the label is already in one of the transitions
+            for u2 in self.delta_u[u]:
+                if label in self.delta_u[u][u2]:
+                    return False
+
             if u_prime not in self.delta_u[u]:
                 self.delta_u[u][u_prime] = []
 
             # Append the label to the list if it's not already there
             if label not in self.delta_u[u][u_prime]:
                 self.delta_u[u][u_prime].append(label)
+            
+
+            return True
 
         def _compute_next_state(self, u, label):
             for u_prime in self.delta_u[u]:
@@ -358,6 +367,8 @@ if __name__ == '__main__':
     id = 1
     u0 = RM_.u0
 
+    state_policy_dict = {}
+    
     while queue:
         current_node , current_depth = queue.pop(0)
 
@@ -367,20 +378,21 @@ if __name__ == '__main__':
         if current_node.is_root:
             continue
         
-        current_node_parent = current_node.parent
-        parent_label = current_node_parent.label 
+        parent_node = current_node.parent
+        parent_label = parent_node.label 
 
         # deal with the case when the parent node is the Root node:
-        if current_node_parent.is_root:
+        if parent_node.is_root:
             u_start = u0
             pi , label = current_node.policy, current_node.label 
-            # print(f"The label is: {node.label} , the policy is: {node.policy}.")
+          
 
             if pi not in RM_.delta_p[u_start]:
                 
                 RM_.delta_p[u_start][pi] = id
                 RM_.add_transition(u_start,id, label)
-                # print(RM_.delta_u)
+                state_policy_dict[pi] = id
+          
                 id+=1
             else:
                 up = RM_.delta_p[u_start][pi]
@@ -389,79 +401,29 @@ if __name__ == '__main__':
         else:
             u_start = RM_._compute_current_state(parent_label)
 
-            if not current_node.policy == current_node_parent.policy:
-                # add a new node
+            if not current_node.policy == parent_node.policy:
+                # add a new node if this policy hasn't been seen before
+                if current_node.policy not in state_policy_dict:
 
-                RM_.add_transition(u_start,id, current_node.label[-1])
-                id+= 1
+                    new_state_created = RM_.add_transition(u_start,id, current_node.label[-1])
+                    state_policy_dict[current_node.policy] = id
+                    
+                    if new_state_created:# if this label hasnt been seen before
+                        id+= 1
+
+                else: # this policy has already been seen
+                    corresponding_state  = state_policy_dict[current_node.policy] # find its corresponding state and append the current label
+                    s = RM_.add_transition(u_start,corresponding_state , current_node.label[-1])
 
             else: # add a self transition with the seen label
-                # RM_.delta_p[u_start] = {}
-
+               
                 RM_.add_transition(u_start, u_start, label = current_node.label[-1] )
-    print(RM_.delta_u)
+
+    print(state_policy_dict)
+    # Pretty-print the dictionary
+    pp = pprint.PrettyPrinter(indent=4)
+    pp.pprint(RM_.delta_u)
         
-
-
-
-
-    # # This is not yet systematic to deal with the Root node
-    # for node in Root.children:
-    #     queue.append((node, current_depth + 1))
-    #     pi , label = node.policy, node.label 
-    #     # print(f"The label is: {node.label} , the policy is: {node.policy}.")
-
-    #     if pi not in RM_.delta_p[0]:
-            
-    #         RM_.delta_p[0][pi] = id
-    #         RM_.add_transition(u0,id, label)
-    #         # print(RM_.delta_u)
-    #         id+=1
-    #     else:
-    #         up = RM_.delta_p[0][pi]
-    #         RM_.add_transition(u0,up, label)
-
-    # while queue:
-    #     current_node , current_depth = queue.pop(0)
-    #     current_node_parent = current_node.parent
-
-    #     # find which reward machine state the current_node_parent is in
-    #     curr_u  = RM_._compute_current_state(label= current_node_parent.label)
-
-
-        # # if the policies changes
-        # if not current_node.policy == current_node_parent.policy:
-        #     pass
-        # else: # add a self transition
-        #     pass
-
-    # print(RM_.delta_p)
-    # print(RM_.delta_u)
-
-    # # start from a root node
-    # Tree = [Root]
-    # RM = RewardMachine(file = None)
-    # RM.u0 = 0
-    # RM.delta_u[RM.u0] = {}
-    # print("RM: ", RM.delta_u)
-    # # RM.delta_u[u1][u2] = dnf_formula
-    # total_sum = 0
-    # depth = 0
-
-    # curr_rm_state = RM.u0
-
-    # while Tree:
-    #     current_node = Tree.pop(0)
-    #     if depth > 0:
-    #         # have I seen this policy before
-    #         # to find the current state of the reward machine being constructed
-    #         # we can do so by travering it using the labeling trajectory of its parent!
-    #         pass
-    #     for child in current_node.children:
-    #         Tree.append(child)
-
-    #     depth += 1
-    # # ppec(mdpRM)
 
 
 
