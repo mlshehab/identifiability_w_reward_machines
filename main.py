@@ -101,6 +101,13 @@ def get_policy_from_obs_history(obs_traj : list, mdpRM , reward):
     return policy[current_u*mdp.n_states + obs_traj[-1][1]]
 
 
+
+
+
+
+
+
+
 def ppec(mdpRM: MDPRM):
     # Policy Preserving Equivalence Class
     mdp = mdpRM.mdp
@@ -215,9 +222,13 @@ if __name__ == '__main__':
     P = sampleMDP1
     
     mdp = MDP(n_states=6,n_actions=4,P = P,gamma = 0.9,horizon=10)
-    rm = RewardMachine("./rm_tree.txt")
+    rm = RewardMachine("./patrol.txt")
     print(rm.delta_u)
     
+
+
+
+
 
     L = {}
 
@@ -233,7 +244,37 @@ if __name__ == '__main__':
     mdpRM = MDPRM(mdp,rm,L)
     # newMDP = mdpRM.construct_product()
 
-    ppec(mdpRM)
+
+    Root = Node(label = None)
+
+    # construct the first children
+    # this assume that mu_0 has full support
+
+    for s in range(mdp.n_states):
+        # get label of the state
+        label = L[s]
+
+        # create a node for that state
+        child_node = Node(label = label)
+        Root.add_child(child_node)
+
+        # print(f"The label for state {s} is {label}")
+    
+    
+
+    # depth = 0
+    # max_depth = 6*4
+
+    # while depth < max_depth:
+
+    #     depth+=1
+
+
+
+
+
+
+    # ppec(mdpRM)
 
 
 

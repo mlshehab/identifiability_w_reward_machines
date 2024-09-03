@@ -18,7 +18,9 @@ class RewardMachine:
         self.terminal_u = -1  # All terminal states are sent to the same terminal state with id *-1*
         self.terminal_states = None
         self.t_count = 0 # counts the number of transitions in the reward machine
-        self._load_reward_machine(file)
+        self.file = file
+        if self.file:
+            self._load_reward_machine(file)
         self.known_transitions = {} # Auxiliary variable to speed up computation of the next RM state
         self.n_states = len(self.U)
     # Public methods -----------------------------------
@@ -157,3 +159,6 @@ class RewardMachine:
                 ctr+=1
            
         return new_d
+    
+
+
