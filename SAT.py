@@ -268,16 +268,16 @@ if __name__ == '__main__':
 
     SET1 = ['A', 'AA', 'BA','CA','AAA','ACA','BAA', 'BBA','BCA','CAA','CBA','CCA']
     SET2 = ['B','BB','CB','BBB','BCB', 'CBB', 'CCB']
-    SET3 = ['C','BC', 'CC','ABC', 'BBC', 'BCC', 'CBC', 'CCC']
-    SET4 = ['AB', 'CAB', 'ACB' , 'AAB', 'ABB', 'BAB']
+    SET3 = ['C','BC', 'CC','ABC', 'BBC', 'BCC', 'CBC', 'CCC', 'ABAC','ABBC']
+    SET4 = ['AB', 'CAB', 'ACB' , 'AAB', 'ABB', 'BAB','ABAB','ABBB']
     SET5 = ['AC', 'AAC', 'ACC', 'BAC', 'CAC']
-    SET6 = ['ABA']
+    SET6 = ['ABA','ABAA','ABBA']
 
     counter_examples[0] = list(product(SET1, SET6))
     counter_examples[1] = list(product(SET3, SET5))
     counter_examples[2] = list(product(SET2, SET4))
     # counter_examples[3] = list(product(SET2, SET3))
-    print(f"The counter examples are: {counter_examples}")
+    # print(f"The counter examples are: {counter_examples}")
     # C4 from from Notion Write-up 
     for state in range(n_counter):
         ce_set = counter_examples[state]
@@ -295,7 +295,7 @@ if __name__ == '__main__':
             for elt in res_:
                 s.add(Not(elt))
 
-
+    # s.add(B[0][2][2])
     # no
    
 
