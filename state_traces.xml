@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<StateTraces>
+  <State_0>
+    <List_1>D, DD, DDD, CDD</List_1>
+    <List_2>ADD</List_2>
+    </State_0>
+  <State_1>
+    <List_1>D, DD, DDD, CDD</List_1>
+    <List_2>AD, DAD, ADD, AAD</List_2>
+    </State_1>
+  <State_2>
+    <List_1>A, DA, AA, DDA, DAA, ADA, AAA, BAA</List_1>
+    </State_2>
+  <State_3>
+    <List_1>A, AA, DAA, AAA, BAA</List_1>
+    </State_3>
+  <State_4>
+    <List_1>D, DD, CD, DDD, DCD, CCD, CDD</List_1>
+    <List_2>ADD</List_2>
+    </State_4>
+  <State_5>
+    <List_1>D, DD, CD, DDD, DCD, CCD, CDD, BCD</List_1>
+    <List_2>AD, ADD, AAD, DAD, BAD</List_2>
+    </State_5>
+  <State_6>
+    <List_1>A, AA, DA, BA, DAA, DDA, AAA, ADA, CBA, CDA, BBA, BAA</List_1>
+    <List_2>ABA</List_2>
+    </State_6>
+  <State_7>
+    <List_1>A, AA, BA, AAA, DAA, BBA, BAA</List_1>
+    <List_2>ABA</List_2>
+    </State_7>
+  <State_8>
+    <List_1>C, DC, CC, DDC, DCC, CCC, CDC, BCC</List_1>
+    </State_8>
+  <State_9>
+    <List_1>C, DC, CC, BC, DDC, DCC, CCC, CBC, CDC, BBC, BCC</List_1>
+    <List_2>ABC</List_2>
+    <List_3>ADC</List_3>
+    </State_9>
+  <State_10>
+    <List_1>B, CB, BB, DCB, CCB, BCB, BBB, CBB</List_1>
+    <List_2>AB, AAB, DAB, ABB, BAB</List_2>
+    </State_10>
+  <State_11>
+    <List_1>B, BB, CBB, BBB</List_1>
+    <List_2>AB, AAB, ABB, BAB</List_2>
+    </State_11>
+  <State_12>
+    <List_1>C, CC, DCC, CCC, BCC</List_1>
+    </State_12>
+  <State_13>
+    <List_1>C, CC, BC, DCC, CCC, BCC, BBC, CBC</List_1>
+    </State_13>
+  <State_14>
+    <List_1>B, BB, CB, CBB, CCB, BBB, BCB</List_1>
+    <List_2>ABB</List_2>
+    </State_14>
+  <State_15>
+    <List_1>B, BB, BBB, CBB</List_1>
+    <List_2>ABB</List_2>
+    </State_15>
+  </StateTraces>

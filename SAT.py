@@ -1,6 +1,8 @@
 import numpy as np
 from z3 import Bool, Solver, Implies, Not, BoolRef, sat,print_matrix, Or, And, AtMost # type: ignore
 from itertools import product
+import xml.etree.ElementTree as ET
+from itertools import combinations, product
 
 def ExactlyOne(vars):
     """Ensure exactly one of the variables in the list is True."""
@@ -10,36 +12,6 @@ def ExactlyOne(vars):
     at_most_one = AtMost(*vars, 1)
     # Both conditions must be satisfied
     return And(at_least_one, at_most_one)
-
-# adjacent = {0:[1,2], 1:[0,2,3],2:[0,1,4], 3:{1,4}, 4:{2,3} }
-# n_nodes = 5
-# n_colors = 3
-
-# # we have a variable for each color for each node
-# # x_i_j is the i-th color of the j-th node
-# X = [[Bool('x_%s_%s'%(i,j)) for i in range(n_colors)] for j in range(n_nodes)] 
-# print("X = ",X)
-# s = Solver() # type: ignore
-
-# # Each node can have only one color
-# # if x_ij = 1, then x_ij = 0 for all other j's
-# for i in range(n_nodes):
-#     s.add(ExactlyOne([X[i][j] for j in range(n_colors)]))
-
-# # Distinct colors
-# for i in range(n_nodes):
-#     for j in adjacent[i]:
-#         for c in range(n_colors):
-#             s.add(Implies(X[i][c], Not(X[j][c]) ))
-                  
-# s.check()
-# if s.check() == sat:
-#     print("Yup!")
-# m = s.model()
-
-# r = [[ m.evaluate(X[i][j]) for j in range(n_colors)] for i in range(n_nodes)]
-# print_matrix(r)
-
 
 
 def one_entry_per_row(B):
@@ -205,9 +177,59 @@ def element_wise_and_boolean_vectors(vector1, vector2):
     
     return result
 
+
+def read_traces_from_xml(filename="state_traces.xml"):
+    """
+    Reads and parses the XML file containing state traces.
+
+    Parameters:
+    - filename: The XML file name to read from.
+
+    Returns:
+    - state_traces: A dictionary where keys are state indices and values are lists of grouped lists.
+    """
+    # Parse the XML file
+    tree = ET.parse(filename)
+    root = tree.getroot()
+
+    # Initialize a dictionary to store the traces
+    state_traces = {}
+
+    # Iterate over each state element
+    for state_element in root:
+        state_id = int(state_element.tag.split("_")[1])  # Extract the state number
+        state_traces[state_id] = []
+
+        # Iterate over each list element under the state
+        for list_element in state_element:
+            # Split the text to get the group items back into a list
+            group = list_element.text.split(", ")
+            state_traces[state_id].append(group)
+
+    return state_traces
+
+def generate_combinations(traces_dict):
+    combinations_dict = {}
+
+    for state, lists in traces_dict.items():
+        all_combinations = []
+        # Generate combinations for different lengths of lists
+        r = 2
+        for combination in combinations(lists, r):
+            print(f"Generating combinations for state {state}, combination size {r}: {combination}")
+            cross_products = list(product(*combination))
+            all_combinations.extend(cross_products)
+        
+        combinations_dict[state] = all_combinations
+
+    return combinations_dict
+
+
+
 if __name__ == '__main__':
-    kappa = 3
-    AP = 3
+
+    kappa = 4
+    AP = 4
 
     B = [[[Bool('x_%s_%s_%s'%(i,j,k) )for j in range(kappa)]for i in range(kappa)]for k in range(AP)]
 
@@ -244,7 +266,7 @@ if __name__ == '__main__':
         s.add(element)
     
 
-    proposition2index = {'A':0, 'B':1 , 'C':2}
+    proposition2index = {'A':0, 'B':1 , 'C':2, 'D':3}
 
     def prefix2indices(s):
         out = []
@@ -252,62 +274,84 @@ if __name__ == '__main__':
             out.append(proposition2index[l])
         return out
 
-    n_counter = 3
+    n_counter = 1
 
     counter_examples = {}
     for ce in range(n_counter):
         if ce not in counter_examples.keys():
             counter_examples[ce] = []
-    
+
     # I will hard code the counter examples for
     # SET1 = ['A', 'AA', 'AAA', 'BA', 'BAA', 'BBA']
     # SET2 = ['B', 'BB', 'BBB','ABB']
     # SET3 = ['AB','AAB','BAB']
     # SET4 = ['ABA']
-    
 
-    SET1 = ['A', 'AA', 'BA','CA','AAA','ACA','BAA', 'BBA','BCA','CAA','CBA','CCA']
-    SET2 = ['B','BB','CB','BBB','BCB', 'CBB', 'CCB']
-    SET3 = ['C','BC', 'CC','ABC', 'BBC', 'BCC', 'CBC', 'CCC', 'ABAC','ABBC']
-    SET4 = ['AB', 'CAB', 'ACB' , 'AAB', 'ABB', 'BAB','ABAB','ABBB']
-    SET5 = ['AC', 'AAC', 'ACC', 'BAC', 'CAC']
-    SET6 = ['ABA','ABAA','ABBA']
+    # Read traces from XML
+    parsed_traces = read_traces_from_xml()
 
-    counter_examples[0] = list(product(SET1, SET6))
-    counter_examples[1] = list(product(SET3, SET5))
-    counter_examples[2] = list(product(SET2, SET4))
+    # Display the parsed traces
+    print("\nParsed Traces from XML:")
+    for state, lists in parsed_traces.items():
+        print(f"State {state}:")
+        for i, lst in enumerate(lists, 1):
+            print(f"  l{i} = {lst}")
+
+    # Generate cross products for each state
+    cross_product_dict = generate_combinations(parsed_traces)
+
+    # Display the cross products
+    print("\nCross Products for each State:")
+    for state, cross_products in cross_product_dict.items():
+        print(f"State {state}:")
+        if cross_products == None:
+            print(f"The cross for {state} is None")
+        for i, cross_prod in enumerate(cross_products, 1):
+            print(f"  Cross Product {i}: {cross_prod}")
+
+
+    # SET1 = ['A', 'AA', 'BA','CA','AAA','ACA','BAA', 'BBA','BCA','CAA','CBA','CCA']
+    # SET2 = ['B','BB','CB','BBB','BCB', 'CBB', 'CCB']
+    # SET3 = ['C','BC', 'CC','ABC', 'BBC', 'BCC', 'CBC', 'CCC']
+    # SET4 = ['AB', 'CAB', 'ACB' , 'AAB', 'ABB', 'BAB']
+    # SET5 = ['AC', 'AAC', 'ACC', 'BAC', 'CAC']
+    # SET6 = ['ABA']
+
+    # counter_examples[0] = list(product(SET1, SET6))
+    # counter_examples[1] = list(product(SET3, SET5))
+    # counter_examples[2] = list(product(SET2, SET4))
     # counter_examples[3] = list(product(SET2, SET3))
     # print(f"The counter examples are: {counter_examples}")
-    # C4 from from Notion Write-up 
-    for state in range(n_counter):
-        ce_set = counter_examples[state]
-        # for each counter example in this set, add the correspodning constraint
-        for ce in ce_set:
-            p1 = prefix2indices(ce[0])
-            p2 = prefix2indices(ce[1])
+    # # C4 from from Notion Write-up 
+    # for state in range(n_counter):
+    #     ce_set = counter_examples[state]
+    #     # for each counter example in this set, add the correspodning constraint
+    #     for ce in ce_set:
+    #         p1 = prefix2indices(ce[0])
+    #         p2 = prefix2indices(ce[1])
 
-            # Now
-            sub_B1 = bool_matrix_mult_from_indices(B,p1, x)
-            sub_B2 = bool_matrix_mult_from_indices(B,p2, x)
+    #         # Now
+    #         sub_B1 = bool_matrix_mult_from_indices(B,p1, x)
+    #         sub_B2 = bool_matrix_mult_from_indices(B,p2, x)
 
-            res_ = element_wise_and_boolean_vectors(sub_B1, sub_B2)
+    #         res_ = element_wise_and_boolean_vectors(sub_B1, sub_B2)
 
-            for elt in res_:
-                s.add(Not(elt))
+    #         for elt in res_:
+    #             s.add(Not(elt))
 
-    # s.add(B[0][2][2])
-    # no
+
+    # # no
    
 
-    s.check()
-    if s.check() == sat:
-        print("Yup!")
-    else:
-        print("NOT SAT")
-    m = s.model()
+    # s.check()
+    # if s.check() == sat:
+    #     print("Yup!")
+    # else:
+    #     print("NOT SAT")
+    # m = s.model()
 
-    for ap in range(AP):
-        r = [[ m.evaluate(B[ap][i][j]) for j in range(kappa)] for i in range(kappa)]
-        print_matrix(r)
+    # for ap in range(AP):
+    #     r = [[ m.evaluate(B[ap][i][j]) for j in range(kappa)] for i in range(kappa)]
+    #     print_matrix(r)
 
-    # # print(B[0])
+    # # # print(B[0])
