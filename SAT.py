@@ -3,6 +3,9 @@ from z3 import Bool, Solver, Implies, Not, BoolRef, sat,print_matrix, Or, And, A
 from itertools import product
 import xml.etree.ElementTree as ET
 from itertools import combinations, product
+from datetime import timedelta
+from tqdm import tqdm
+import time
 
 def ExactlyOne(vars):
     """Ensure exactly one of the variables in the list is True."""
@@ -216,7 +219,7 @@ def generate_combinations(traces_dict):
         # Generate combinations for different lengths of lists
         r = 2
         for combination in combinations(lists, r):
-            print(f"Generating combinations for state {state}, combination size {r}: {combination}")
+            # print(f"Generating combinations for state {state}, combination size {r}: {combination}")
             cross_products = list(product(*combination))
             all_combinations.extend(cross_products)
         
@@ -230,6 +233,8 @@ if __name__ == '__main__':
 
     kappa = 4
     AP = 4
+    total_variables = kappa**2*AP
+    total_constraints = 0
 
     B = [[[Bool('x_%s_%s_%s'%(i,j,k) )for j in range(kappa)]for i in range(kappa)]for k in range(AP)]
 
@@ -259,10 +264,12 @@ if __name__ == '__main__':
 
     # C1 and C2 from Notion Write-up
     for k in range(AP):
+        total_constraints +=1
         s.add(one_entry_per_row(B[k]))
 
     # C3 from from Notion Write-up
     for element in OR_powers_B_T_x:
+        total_constraints +=1
         s.add(element)
     
 
@@ -274,12 +281,12 @@ if __name__ == '__main__':
             out.append(proposition2index[l])
         return out
 
-    n_counter = 1
+    # n_counter = 1
 
-    counter_examples = {}
-    for ce in range(n_counter):
-        if ce not in counter_examples.keys():
-            counter_examples[ce] = []
+    # counter_examples = {}
+    # for ce in range(n_counter):
+    #     if ce not in counter_examples.keys():
+    #         counter_examples[ce] = []
 
     # I will hard code the counter examples for
     # SET1 = ['A', 'AA', 'AAA', 'BA', 'BAA', 'BBA']
@@ -291,23 +298,14 @@ if __name__ == '__main__':
     parsed_traces = read_traces_from_xml()
 
     # Display the parsed traces
-    print("\nParsed Traces from XML:")
-    for state, lists in parsed_traces.items():
-        print(f"State {state}:")
-        for i, lst in enumerate(lists, 1):
-            print(f"  l{i} = {lst}")
+    # print("\nParsed Traces from XML:")
+    # for state, lists in parsed_traces.items():
+    #     print(f"State {state}:")
+    #     for i, lst in enumerate(lists, 1):
+    #         print(f"  l{i} = {lst}")
 
     # Generate cross products for each state
-    cross_product_dict = generate_combinations(parsed_traces)
-
-    # Display the cross products
-    print("\nCross Products for each State:")
-    for state, cross_products in cross_product_dict.items():
-        print(f"State {state}:")
-        if cross_products == None:
-            print(f"The cross for {state} is None")
-        for i, cross_prod in enumerate(cross_products, 1):
-            print(f"  Cross Product {i}: {cross_prod}")
+    counter_examples = generate_combinations(parsed_traces)
 
 
     # SET1 = ['A', 'AA', 'BA','CA','AAA','ACA','BAA', 'BBA','BCA','CAA','CBA','CCA']
@@ -322,36 +320,60 @@ if __name__ == '__main__':
     # counter_examples[2] = list(product(SET2, SET4))
     # counter_examples[3] = list(product(SET2, SET3))
     # print(f"The counter examples are: {counter_examples}")
-    # # C4 from from Notion Write-up 
-    # for state in range(n_counter):
-    #     ce_set = counter_examples[state]
-    #     # for each counter example in this set, add the correspodning constraint
-    #     for ce in ce_set:
-    #         p1 = prefix2indices(ce[0])
-    #         p2 = prefix2indices(ce[1])
 
-    #         # Now
-    #         sub_B1 = bool_matrix_mult_from_indices(B,p1, x)
-    #         sub_B2 = bool_matrix_mult_from_indices(B,p2, x)
+    # C4 from from Notion Write-up 
+    print("Started with C4 ... \n")
+    total_start_time = time.time()
 
-    #         res_ = element_wise_and_boolean_vectors(sub_B1, sub_B2)
+    n_counter = 16
+    for state in range(n_counter):
+        print(f"Currently in state {state}...")
+        ce_set = counter_examples[state]
+        print(f"The number of counter examples is: {len(ce_set)}\n")
+        total_constraints += len(ce_set)
+        
+        # for each counter example in this set, add the correspodning constraint
+        for ce in tqdm(ce_set,desc="Processing Counterexamples"):
+            p1 = prefix2indices(ce[0])
+            p2 = prefix2indices(ce[1])
 
-    #         for elt in res_:
-    #             s.add(Not(elt))
+            # Now
+            sub_B1 = bool_matrix_mult_from_indices(B,p1, x)
+            sub_B2 = bool_matrix_mult_from_indices(B,p2, x)
 
+            res_ = element_wise_and_boolean_vectors(sub_B1, sub_B2)
+
+            for elt in res_:
+                s.add(Not(elt))
+                
+        
+
+    # Use timedelta to format the elapsed time
+    elapsed  = time.time() - total_start_time
+    formatted_time = str(timedelta(seconds= elapsed))
+
+    # Add milliseconds separately
+    milliseconds = int((elapsed % 1) * 1000)
+
+    # Format the time string
+    formatted_time = formatted_time.split('.')[0] + f":{milliseconds:03}"
+    print(f"Adding C4 took {formatted_time} seconds.")
 
     # # no
    
+    import time
+    start = time.time()
+    s.check()
+    end = time.time()
+    print(f"The SAT solver took {end - start} seconds to solve a problem with {total_variables} variables and >= {total_constraints} constraints.")
+    if s.check() == sat:
+        print("Yup!")
+    else:
+        print("NOT SAT")
+    m = s.model()
 
-    # s.check()
-    # if s.check() == sat:
-    #     print("Yup!")
-    # else:
-    #     print("NOT SAT")
-    # m = s.model()
-
-    # for ap in range(AP):
-    #     r = [[ m.evaluate(B[ap][i][j]) for j in range(kappa)] for i in range(kappa)]
-    #     print_matrix(r)
+    for ap in range(AP):
+        r = [[ m.evaluate(B[ap][i][j]) for j in range(kappa)] for i in range(kappa)]
+        print_matrix(r)
 
     # # # print(B[0])

@@ -147,7 +147,7 @@ if __name__ == '__main__':
     #############
     #############
 
-    depth = 3
+    depth = 6
     Root = Node(label = None, state= None, u = None,policy = None , is_root= True)
     queue = [(Root, 0)]  # Queue of tuples (node, current_depth)
 
