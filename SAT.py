@@ -6,6 +6,7 @@ from itertools import combinations, product
 from datetime import timedelta
 from tqdm import tqdm
 import time
+from joblib import Parallel, delayed
 
 def ExactlyOne(vars):
     """Ensure exactly one of the variables in the list is True."""
@@ -262,15 +263,25 @@ if __name__ == '__main__':
     # print(OR_powers_B_T_x)
     s = Solver() # type: ignore
 
+    # C0 Trace compression
+    for ap in range(AP):
+        for i in range(kappa):
+            for j in range(kappa):
+                # For boolean variables, B[ap][i][j], add the constraint that the current solution
+                # is not equal to the previous solution
+                s.add(Implies(B[ap][i][j], B[ap][j][j]))
+                total_constraints +=1
+
+
     # C1 and C2 from Notion Write-up
     for k in range(AP):
         total_constraints +=1
         s.add(one_entry_per_row(B[k]))
 
-    # C3 from from Notion Write-up
-    for element in OR_powers_B_T_x:
-        total_constraints +=1
-        s.add(element)
+    # # C3 from from Notion Write-up
+    # for element in OR_powers_B_T_x:
+    #     total_constraints +=1
+    #     s.add(element)
     
 
     proposition2index = {'A':0, 'B':1 , 'C':2, 'D':3}
@@ -308,23 +319,12 @@ if __name__ == '__main__':
     counter_examples = generate_combinations(parsed_traces)
 
 
-    # SET1 = ['A', 'AA', 'BA','CA','AAA','ACA','BAA', 'BBA','BCA','CAA','CBA','CCA']
-    # SET2 = ['B','BB','CB','BBB','BCB', 'CBB', 'CCB']
-    # SET3 = ['C','BC', 'CC','ABC', 'BBC', 'BCC', 'CBC', 'CCC']
-    # SET4 = ['AB', 'CAB', 'ACB' , 'AAB', 'ABB', 'BAB']
-    # SET5 = ['AC', 'AAC', 'ACC', 'BAC', 'CAC']
-    # SET6 = ['ABA']
-
-    # counter_examples[0] = list(product(SET1, SET6))
-    # counter_examples[1] = list(product(SET3, SET5))
-    # counter_examples[2] = list(product(SET2, SET4))
-    # counter_examples[3] = list(product(SET2, SET3))
-    # print(f"The counter examples are: {counter_examples}")
 
     # C4 from from Notion Write-up 
     print("Started with C4 ... \n")
     total_start_time = time.time()
 
+   
     n_counter = 16
     for state in range(n_counter):
         print(f"Currently in state {state}...")
@@ -362,18 +362,58 @@ if __name__ == '__main__':
     # # no
    
     import time
+    # start = time.time()
+    # s.check()
+    # end = time.time()
+    # print(f"The SAT solver took {end - start} seconds to solve a problem with {total_variables} variables and >= {total_constraints*kappa} constraints.")
+    # if s.check() == sat:
+    #     print("Yup!")
+    # else:
+    #     print("NOT SAT")
+    # m = s.model()
+
+    # for ap in range(AP):
+    #     r = [[ m.evaluate(B[ap][i][j]) for j in range(kappa)] for i in range(kappa)]
+    #     print_matrix(r)
+
+    # Record all solutions
+    # solutions = []
+
+    # Start the timer
     start = time.time()
-    s.check()
-    end = time.time()
-    print(f"The SAT solver took {end - start} seconds to solve a problem with {total_variables} variables and >= {total_constraints} constraints.")
-    if s.check() == sat:
-        print("Yup!")
-    else:
-        print("NOT SAT")
-    m = s.model()
+    s_it = 0
+    while True:
+        # Solve the problem
+        if s.check() == sat:
+            
+            # Get the current solution
+            m = s.model()
+            
+            # # Store the current solution
+            # solution = []
+            print(f"Solution {s_it} ...")
+            for ap in range(AP):
+                r = [[m.evaluate(B[ap][i][j]) for j in range(kappa)] for i in range(kappa)]
+                # solution.append(r)
+                
+                print_matrix(r)  # Assuming print_matrix prints your matrix nicely
+            s_it += 1
+            # # Add the solution to the list of found solutions
+            # solutions.append(solution)
 
-    for ap in range(AP):
-        r = [[ m.evaluate(B[ap][i][j]) for j in range(kappa)] for i in range(kappa)]
-        print_matrix(r)
+            # Build a clause that ensures the next solution is different
+            # The clause is essentially that at least one variable must differ
+            block_clause = []
+            for ap in range(AP):
+                for i in range(kappa):
+                    for j in range(kappa):
+                        # For boolean variables, B[ap][i][j], add the constraint that the current solution
+                        # is not equal to the previous solution
+                        block_clause.append(B[ap][i][j] != m.evaluate(B[ap][i][j], model_completion=True))
 
-    # # # print(B[0])
+            # Add the blocking clause to the solver
+            s.add(Or(block_clause))
+            
+        else:
+            print("NOT SAT - No more solutions!")
+            break

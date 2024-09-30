@@ -9,7 +9,7 @@ from GridWorld import BasicGridWorld
 from plot import plot_arrows
 import pprint
 import xml.etree.ElementTree as ET
-
+from collections import deque
 class Node:
     def __init__(self, label,state, u, policy, is_root = False):
         self.label = label
@@ -78,9 +78,13 @@ def u_from_obs(obs_str, mdpRM):
     return current_u
 
 
+import argparse
 
-
-
+# Define a function to handle command-line arguments
+def parse_args():
+    parser = argparse.ArgumentParser(description="Automate script with depth option")
+    parser.add_argument("-depth", type=int, help="Set the depth", required=True)
+    return parser.parse_args()
 
 if __name__ == '__main__':
 
@@ -147,7 +151,12 @@ if __name__ == '__main__':
     #############
     #############
 
-    depth = 6
+    # Parse command-line arguments
+    args = parse_args()
+    
+    # Set the depth variable from the command line argument
+    depth = args.depth
+
     Root = Node(label = None, state= None, u = None,policy = None , is_root= True)
     queue = [(Root, 0)]  # Queue of tuples (node, current_depth)
 
@@ -190,8 +199,9 @@ if __name__ == '__main__':
         print(" " * (level * 4) + f"Node({node.label}, {node.u}, {node.policy})")
         for child in node.children:
             print_tree(child, level + 1)
-    from collections import deque
+    
     # print_tree(Root)
+
     def collect_state_traces_iteratively(root):
         """
         Iteratively traverse the tree using BFS, starting from the root node,
@@ -226,6 +236,22 @@ if __name__ == '__main__':
 
         return state_traces
 
+    def remove_consecutive_duplicates(input_str):
+        if not input_str:
+            return ""
+        
+        result = [input_str[0]]  # Start with the first character
+        
+        for i in range(1, len(input_str)):
+            if input_str[i] != input_str[i - 1]:
+                result.append(input_str[i])
+        
+        return ''.join(result)
+
+    # # Example usage:
+    # input_str = 'AABCCDDDA'
+    # output_str = remove_consecutive_duplicates(input_str)
+    # print(output_str)  # Output: 'BADA'
     def get_unique_traces(proposition_traces):
         """
         Extract unique items from a list of tuples based on the label part of each tuple.
@@ -236,17 +262,17 @@ if __name__ == '__main__':
         Returns:
         - unique_traces: List of unique tuples based on the label part.
         """
-        # Use a set to track unique labels
+        # Use a set to track unique labels  
         unique_labels = set()
         # List to store unique tuples
         unique_traces = []
 
         for label, policy in proposition_traces:
             # Check if the label is already in the set
-            if label not in unique_labels:
+            if remove_consecutive_duplicates(label) not in unique_labels and len(remove_consecutive_duplicates(label))<=5:
                 # If not, add it to the set and add the tuple to the unique list
-                unique_labels.add(label)
-                unique_traces.append((label, policy))
+                unique_labels.add(remove_consecutive_duplicates(label))
+                unique_traces.append((remove_consecutive_duplicates(label), policy))
 
         return unique_traces
 
@@ -275,15 +301,8 @@ if __name__ == '__main__':
         
     # Example usage:
     # Collect proposition traces for each state iteratively
-    state_traces = collect_state_traces_iteratively(Root)
-    # for i in range(n_states):
-    #     unique_traces = get_unique_traces(state_traces[i])
-    #         # Group the traces by their policy
-    #     grouped_lists = group_traces_by_policy(unique_traces)
-
-    #     # Display the output lists
-    #     for i, group in enumerate(grouped_lists, 1):
-    #         print(f"\nl{i} = {group}")
+    # state_traces = collect_state_traces_iteratively(Root)
+   
 
     
 
@@ -322,7 +341,7 @@ if __name__ == '__main__':
         print(f"Traces written to {filename}.")
 
 
-    # Example usage
+    # # Example usage
     state_traces = collect_state_traces_iteratively(Root)
     n_states = len(state_traces)  # Assuming this is defined elsewhere
     write_traces_to_xml(state_traces, n_states)
