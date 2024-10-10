@@ -156,14 +156,16 @@ if __name__ == '__main__':
     
     # Set the depth variable from the command line argument
     depth = args.depth
-
+    print(f"The depth is: {depth}")
     Root = Node(label = None, state= None, u = None,policy = None , is_root= True)
     queue = [(Root, 0)]  # Queue of tuples (node, current_depth)
 
     # The first time step here is assuming a fully supported starting distribution
     current_node, current_depth = queue.pop(0)  # Dequeue the next node
 
-    for s in range(mdp.n_states):
+    starting_states = [9]
+    for s in starting_states:
+    # for s in range(mdp.n_states):
         # get label of the state
         label = L[s]
         # create a node for that state
@@ -200,7 +202,7 @@ if __name__ == '__main__':
         for child in node.children:
             print_tree(child, level + 1)
     
-    # print_tree(Root)
+    print_tree(Root)
 
     def collect_state_traces_iteratively(root):
         """

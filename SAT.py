@@ -324,7 +324,47 @@ if __name__ == '__main__':
     print("Started with C4 ... \n")
     total_start_time = time.time()
 
-   
+    ce_set = [('B', 'AB'),
+        ('ABC', 'AC'),
+        ('ABA', 'A'),
+        ('ABCD', 'ABD'),
+        ('ABCB', 'B'),
+        ('ABCB', 'AB'),
+        ('ABCDA', 'ABCA'),
+        ('ABCDC', 'ABC'),
+        ('ABCDB', 'AB'),
+        ('CB', 'AB'),
+        ('ABC', 'C'),
+        ('BC', 'ABC'),
+        ('B', 'ABCB'),
+        ('ABC', 'AC'),
+        ('C', 'AC'),
+        ('ABCD', 'AD'),
+        ('ABC', 'ADC'),
+        ('ABAD', 'ABCD'),
+        ('ABCDA', 'ABA'),
+        ('ABDA', 'A'),
+        ('ABD', 'AD'),
+        ('ABCB', 'AB'),
+        ('ABCDA', 'ABCBA'),
+        ('ABCA', 'A'),
+        ('ABCA', 'ABA')]
+
+    # for ce in tqdm(ce_set,desc="Processing Counterexamples"):
+    #     p1 = prefix2indices(ce[0])
+    #     p2 = prefix2indices(ce[1])
+
+    #     # Now
+    #     sub_B1 = bool_matrix_mult_from_indices(B,p1, x)
+    #     sub_B2 = bool_matrix_mult_from_indices(B,p2, x)
+
+    #     res_ = element_wise_and_boolean_vectors(sub_B1, sub_B2)
+
+    #     for elt in res_:
+    #         s.add(Not(elt))
+
+
+
     n_counter = 16
     for state in range(n_counter):
         print(f"Currently in state {state}...")
