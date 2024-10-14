@@ -89,7 +89,7 @@ def parse_args():
 if __name__ == '__main__':
 
 
-    grid_size = 4
+    grid_size = 3
     wind = 0.1
     discount = 0.9
     horizon =   13   
@@ -124,17 +124,35 @@ if __name__ == '__main__':
     # print(rm.delta_u)
     
 
+    # # The grid numbering and labeling is :
+    # # 0 5 10 15 20     D D H C C
+    # # 1 6 11 16 21     D D H C C
+    # # 2 7 12 17 22     H H H H H
+    # # 3 8 13 18 23     A A H B B
+    # # 4 9 14 19 24     A A H B B 
+
+
+    # L = {}
+
+    # L[3], L[4], L[8], L[9]     = 'A', 'A', 'A', 'A'
+    # L[18], L[19], L[23], L[24] = 'B', 'B', 'B', 'B'
+    # L[20], L[21], L[15], L[16]   = 'C', 'C', 'C', 'C'
+    # L[0], L[1], L[5], L[6]     = 'D', 'D', 'D', 'D'
+    # L[2], L[7], L[10],L[11],L[12],L[13],L[14],L[17], L[22] = 'H','H','H','H','H','H','H','H','H'
+
     # The grid numbering and labeling is :
-    # 0 4 8 12      D D C C
-    # 1 5 9 13      D D C C
-    # 2 6 10 14     A A B B
-    # 3 7 11 15     A A B B 
+    # 0 3 6     D H C 
+    # 1 4 7     H H H 
+    # 2 5 8     A H B
+    
+
     L = {}
 
-    L[2], L[6], L[3], L[7]     = 'A', 'A', 'A', 'A'
-    L[10], L[14], L[11], L[15] = 'B', 'B', 'B', 'B'
-    L[8], L[9], L[12], L[13]   = 'C', 'C', 'C', 'C'
-    L[0], L[1], L[4], L[5]     = 'D', 'D', 'D', 'D'
+    L[2]     = 'A'
+    L[8] = 'B'
+    L[6]= 'C'
+    L[0]     = 'D'
+    L[3], L[4], L[5],L[1],L[7] = 'H','H','H','H','H'
 
     mdpRM = MDPRM(mdp,rm,L)
     mdp_ =  mdpRM.construct_product()
@@ -164,8 +182,8 @@ if __name__ == '__main__':
     current_node, current_depth = queue.pop(0)  # Dequeue the next node
 
     starting_states = [9]
-    for s in starting_states:
-    # for s in range(mdp.n_states):
+    # for s in starting_states:
+    for s in range(mdp.n_states):
         # get label of the state
         label = L[s]
         # create a node for that state
@@ -202,7 +220,7 @@ if __name__ == '__main__':
         for child in node.children:
             print_tree(child, level + 1)
     
-    print_tree(Root)
+    # print_tree(Root)
 
     def collect_state_traces_iteratively(root):
         """
@@ -251,7 +269,7 @@ if __name__ == '__main__':
         return ''.join(result)
 
     # # Example usage:
-    # input_str = 'AABCCDDDA'
+    # input_str = 'CDCDCDCD'
     # output_str = remove_consecutive_duplicates(input_str)
     # print(output_str)  # Output: 'BADA'
     def get_unique_traces(proposition_traces):
@@ -271,7 +289,7 @@ if __name__ == '__main__':
 
         for label, policy in proposition_traces:
             # Check if the label is already in the set
-            if remove_consecutive_duplicates(label) not in unique_labels and len(remove_consecutive_duplicates(label))<=5:
+            if remove_consecutive_duplicates(label) not in unique_labels:
                 # If not, add it to the set and add the tuple to the unique list
                 unique_labels.add(remove_consecutive_duplicates(label))
                 unique_traces.append((remove_consecutive_duplicates(label), policy))
