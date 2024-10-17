@@ -325,14 +325,11 @@ if __name__ == '__main__':
     total_start_time = time.time()
 
     ce_set = [('B', 'AB'),
-        ('ABC', 'AC'),
         ('ABA', 'A'),
-        ('ABCD', 'ABD'),
         ('ABCB', 'B'),
         ('ABCB', 'AB'),
-        ('ABCDA', 'ABCA'),
+        ('ABCDC', 'ADC'),
         ('ABCDC', 'ABC'),
-        ('ABCDB', 'AB'),
         ('CB', 'AB'),
         ('ABC', 'C'),
         ('BC', 'ABC'),
@@ -350,41 +347,41 @@ if __name__ == '__main__':
         ('ABCA', 'A'),
         ('ABCA', 'ABA')]
 
-    # for ce in tqdm(ce_set,desc="Processing Counterexamples"):
-    #     p1 = prefix2indices(ce[0])
-    #     p2 = prefix2indices(ce[1])
+    for ce in tqdm(ce_set,desc="Processing Counterexamples"):
+        p1 = prefix2indices(ce[0])
+        p2 = prefix2indices(ce[1])
 
-    #     # Now
-    #     sub_B1 = bool_matrix_mult_from_indices(B,p1, x)
-    #     sub_B2 = bool_matrix_mult_from_indices(B,p2, x)
+        # Now
+        sub_B1 = bool_matrix_mult_from_indices(B,p1, x)
+        sub_B2 = bool_matrix_mult_from_indices(B,p2, x)
 
-    #     res_ = element_wise_and_boolean_vectors(sub_B1, sub_B2)
+        res_ = element_wise_and_boolean_vectors(sub_B1, sub_B2)
 
-    #     for elt in res_:
-    #         s.add(Not(elt))
+        for elt in res_:
+            s.add(Not(elt))
 
 
 
-    n_counter = 16
-    for state in range(n_counter):
-        print(f"Currently in state {state}...")
-        ce_set = counter_examples[state]
-        print(f"The number of counter examples is: {len(ce_set)}\n")
-        total_constraints += len(ce_set)
+    # n_counter = 16
+    # for state in range(n_counter):
+    #     print(f"Currently in state {state}...")
+    #     ce_set = counter_examples[state]
+    #     print(f"The number of counter examples is: {len(ce_set)}\n")
+    #     total_constraints += len(ce_set)
         
-        # for each counter example in this set, add the correspodning constraint
-        for ce in tqdm(ce_set,desc="Processing Counterexamples"):
-            p1 = prefix2indices(ce[0])
-            p2 = prefix2indices(ce[1])
+    #     # for each counter example in this set, add the correspodning constraint
+    #     for ce in tqdm(ce_set,desc="Processing Counterexamples"):
+    #         p1 = prefix2indices(ce[0])
+    #         p2 = prefix2indices(ce[1])
 
-            # Now
-            sub_B1 = bool_matrix_mult_from_indices(B,p1, x)
-            sub_B2 = bool_matrix_mult_from_indices(B,p2, x)
+    #         # Now
+    #         sub_B1 = bool_matrix_mult_from_indices(B,p1, x)
+    #         sub_B2 = bool_matrix_mult_from_indices(B,p2, x)
 
-            res_ = element_wise_and_boolean_vectors(sub_B1, sub_B2)
+    #         res_ = element_wise_and_boolean_vectors(sub_B1, sub_B2)
 
-            for elt in res_:
-                s.add(Not(elt))
+    #         for elt in res_:
+    #             s.add(Not(elt))
                 
         
 
