@@ -115,8 +115,8 @@ if __name__ == '__main__':
     mdp = MDP(n_states=n_states, n_actions=n_actions,P = P,gamma = gw.discount,horizon=10)
     
    
-    rm = RewardMachine("./rm_examples/patrol.txt")
-
+    rm = RewardMachine("./rm_examples/patrol_adv.txt")
+    print(f"rm.delta_u = {rm.delta_u}")
     policy = {}
     for rms in range(rm.n_states):
         policy[rms] = f"p{rms}"
@@ -125,16 +125,16 @@ if __name__ == '__main__':
     
 
     # The grid numbering and labeling is :
-    # 0 4 8 12      D D C C
-    # 1 5 9 13      D D C C
-    # 2 6 10 14     A A B B
-    # 3 7 11 15     A A B B 
+    # 0 4 8 12      A D C C
+    # 1 5 9 13      A D C C
+    # 2 6 10 14     A D B B
+    # 3 7 11 15     A D B B 
     L = {}
 
-    L[2], L[6], L[3], L[7]     = 'A', 'A', 'A', 'A'
+    L[2], L[6], L[3], L[7]     = 'A', 'D', 'A', 'D'
     L[10], L[14], L[11], L[15] = 'B', 'B', 'B', 'B'
     L[8], L[9], L[12], L[13]   = 'C', 'C', 'C', 'C'
-    L[0], L[1], L[4], L[5]     = 'D', 'D', 'D', 'D'
+    L[0], L[1], L[4], L[5]     = 'A', 'A', 'D', 'D'
 
     mdpRM = MDPRM(mdp,rm,L)
     mdp_ =  mdpRM.construct_product()
@@ -163,9 +163,9 @@ if __name__ == '__main__':
     # The first time step here is assuming a fully supported starting distribution
     current_node, current_depth = queue.pop(0)  # Dequeue the next node
 
-    starting_states = [9]
-    for s in starting_states:
-    # for s in range(mdp.n_states):
+    # starting_states = [9]
+    # for s in starting_states:
+    for s in range(mdp.n_states):
         # get label of the state
         label = L[s]
         # create a node for that state
@@ -201,8 +201,19 @@ if __name__ == '__main__':
         print(" " * (level * 4) + f"Node({node.label}, {node.u}, {node.policy})")
         for child in node.children:
             print_tree(child, level + 1)
-    
-    print_tree(Root)
+
+    def print_tree_to_text(node, file, level=0):
+        # Write the node information to the file in plain text
+        file.write(" " * (level * 4) + f"Node({node.label}, {node.u}, {node.policy})\n")
+        for child in node.children:
+            print_tree_to_text(child, file, level + 1)
+
+   
+    def save_tree_to_text_file(root_node, filename):
+        with open(filename, 'w') as file:
+            print_tree_to_text(root_node, file)
+
+    save_tree_to_text_file(Root, 'debug.txt')
 
     def collect_state_traces_iteratively(root):
         """
