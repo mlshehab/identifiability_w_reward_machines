@@ -40,7 +40,7 @@ def read_solutions(filename):
 
 # Step 2: Define the function to draw the graph from a matrix
 def draw_graph(matrices, ax, title):
-    propositions = ['A', 'B', 'C', 'D']
+    propositions = ['A', 'B', 'C', 'D','H']
 
     # Number of nodes
     n = len(matrices[0])
@@ -91,7 +91,7 @@ def plot_solutions(solutions):
 def main():
     filename = 'solutions.txt'  # Replace with your file path
     solutions = read_solutions(filename)
-    plot_solutions(solutions)
+    plot_solutions(solutions[:2])
 
 if __name__ == "__main__":
     main()

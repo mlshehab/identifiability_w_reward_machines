@@ -1,56 +1,72 @@
 Solution 0 ...
-[[False, False, True, False],
- [False, True, False, False],
- [False, False, True, False],
- [False, False, False, True]]
-[[True, False, False, False],
- [False, True, False, False],
- [False, True, False, False],
- [False, False, False, True]]
-[[False, False, True, False],
+[[False, False, False, True],
  [False, False, False, True],
  [False, False, True, False],
  [False, False, False, True]]
 [[True, False, False, False],
  [False, True, False, False],
+ [False, False, True, False],
+ [False, False, True, False]]
+[[True, False, False, False],
  [False, True, False, False],
- [True, False, False, False]]
+ [False, True, False, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [True, False, False, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, False, False, True]]
 Solution 1 ...
-[[False, False, False, True],
- [False, False, True, False],
+[[False, True, False, False],
+ [False, True, False, False],
+ [False, False, False, True],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, False, False, True],
  [False, False, True, False],
  [False, False, False, True]]
 [[True, False, False, False],
  [False, True, False, False],
  [False, False, True, False],
  [False, False, True, False]]
-[[False, False, False, True],
- [False, True, False, False],
- [False, True, False, False],
- [False, False, False, True]]
 [[True, False, False, False],
+ [False, True, False, False],
  [True, False, False, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
  [False, False, True, False],
- [False, False, True, False]]
+ [False, False, False, True]]
 Solution 2 ...
-[[False, False, False, True],
+[[False, True, False, False],
  [False, True, False, False],
+ [False, True, False, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, False, False, True],
  [False, False, True, False],
  [False, False, False, True]]
 [[True, False, False, False],
  [False, True, False, False],
  [False, False, True, False],
  [False, False, True, False]]
-[[False, False, False, True],
- [False, True, False, False],
- [False, True, False, False],
- [False, False, False, True]]
 [[True, False, False, False],
+ [False, True, False, False],
  [True, False, False, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
  [False, False, True, False],
- [False, False, True, False]]
+ [False, False, False, True]]
 Solution 3 ...
-[[False, False, False, True],
+[[False, True, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+[[True, False, False, False],
  [False, False, False, True],
  [False, False, True, False],
  [False, False, False, True]]
@@ -58,249 +74,305 @@ Solution 3 ...
  [False, True, False, False],
  [False, False, True, False],
  [False, False, True, False]]
-[[False, False, False, True],
+[[True, False, False, False],
  [False, True, False, False],
- [False, True, False, False],
+ [True, False, False, False],
  [False, False, False, True]]
 [[True, False, False, False],
- [True, False, False, False],
+ [False, True, False, False],
  [False, False, True, False],
- [False, False, True, False]]
+ [False, False, False, True]]
 Solution 4 ...
-[[False, False, False, True],
+[[False, True, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, True, False, False]]
+[[True, False, False, False],
+ [False, False, True, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+[[True, False, False, False],
  [False, True, False, False],
  [False, False, False, True],
  [False, False, False, True]]
 [[True, False, False, False],
  [False, True, False, False],
  [False, False, True, False],
- [False, True, False, False]]
-[[False, False, False, True],
- [False, False, True, False],
- [False, False, True, False],
- [False, False, False, True]]
-[[True, False, False, False],
- [False, True, False, False],
- [True, False, False, False],
- [False, True, False, False]]
-Solution 5 ...
-[[False, False, False, True],
- [False, True, False, False],
- [False, True, False, False],
- [False, False, False, True]]
-[[True, False, False, False],
- [False, True, False, False],
- [False, False, True, False],
- [False, True, False, False]]
-[[False, False, False, True],
- [False, False, True, False],
- [False, False, True, False],
- [False, False, False, True]]
-[[True, False, False, False],
- [False, True, False, False],
- [True, False, False, False],
- [False, True, False, False]]
-Solution 6 ...
-[[False, False, False, True],
- [False, True, False, False],
- [False, False, True, False],
- [False, False, False, True]]
-[[True, False, False, False],
- [False, True, False, False],
- [False, False, True, False],
- [False, True, False, False]]
-[[False, False, False, True],
- [False, False, True, False],
- [False, False, True, False],
- [False, False, False, True]]
-[[True, False, False, False],
- [False, True, False, False],
- [True, False, False, False],
- [False, True, False, False]]
-Solution 7 ...
-[[False, False, True, False],
- [False, True, False, False],
- [False, False, True, False],
- [False, True, False, False]]
-[[True, False, False, False],
- [False, True, False, False],
- [False, True, False, False],
- [False, False, False, True]]
-[[False, False, True, False],
- [False, False, False, True],
- [False, False, True, False],
- [False, False, False, True]]
-[[True, False, False, False],
- [False, True, False, False],
- [False, True, False, False],
  [True, False, False, False]]
-Solution 8 ...
-[[False, False, True, False],
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+Solution 5 ...
+[[False, True, False, False],
  [False, True, False, False],
  [False, False, True, False],
  [False, False, True, False]]
 [[True, False, False, False],
- [False, True, False, False],
- [False, True, False, False],
- [False, False, False, True]]
-[[False, False, True, False],
- [False, False, False, True],
+ [False, False, True, False],
  [False, False, True, False],
  [False, False, False, True]]
 [[True, False, False, False],
  [False, True, False, False],
+ [False, False, False, True],
+ [False, False, False, True]]
+[[True, False, False, False],
  [False, True, False, False],
+ [False, False, True, False],
  [True, False, False, False]]
-Solution 9 ...
-[[False, False, True, False],
- [False, False, False, True],
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+Solution 6 ...
+[[False, True, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, False, True, False],
  [False, False, True, False],
  [False, False, False, True]]
 [[True, False, False, False],
  [False, True, False, False],
  [False, False, False, True],
  [False, False, False, True]]
-[[False, False, True, False],
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [True, False, False, False]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+Solution 7 ...
+[[False, False, False, True],
+ [False, True, False, False],
+ [False, True, False, False],
+ [False, False, False, True]]
+[[True, False, False, False],
  [False, True, False, False],
  [False, False, True, False],
  [False, True, False, False]]
 [[True, False, False, False],
+ [False, False, True, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
  [True, False, False, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+Solution 8 ...
+[[False, False, False, True],
+ [False, True, False, False],
  [False, False, False, True],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, True, False, False]]
+[[True, False, False, False],
+ [False, False, True, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [True, False, False, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+Solution 9 ...
+[[False, False, False, True],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, True, False, False]]
+[[True, False, False, False],
+ [False, False, True, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [True, False, False, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
  [False, False, False, True]]
 Solution 10 ...
-[[False, False, True, False],
+[[False, False, False, True],
  [False, False, True, False],
  [False, False, True, False],
  [False, False, False, True]]
 [[True, False, False, False],
  [False, True, False, False],
- [False, False, False, True],
- [False, False, False, True]]
-[[False, False, True, False],
- [False, True, False, False],
  [False, False, True, False],
- [False, True, False, False]]
+ [False, False, True, False]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, True, False, False],
+ [False, False, False, True]]
 [[True, False, False, False],
  [True, False, False, False],
- [False, False, False, True],
+ [False, False, True, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
  [False, False, False, True]]
 Solution 11 ...
-[[False, False, True, False],
+[[False, False, False, True],
  [False, True, False, False],
  [False, False, True, False],
  [False, False, False, True]]
 [[True, False, False, False],
  [False, True, False, False],
- [False, False, False, True],
- [False, False, False, True]]
-[[False, False, True, False],
- [False, True, False, False],
  [False, False, True, False],
- [False, True, False, False]]
+ [False, False, True, False]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, True, False, False],
+ [False, False, False, True]]
 [[True, False, False, False],
  [True, False, False, False],
- [False, False, False, True],
+ [False, False, True, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
  [False, False, False, True]]
 Solution 12 ...
-[[False, True, False, False],
- [False, True, False, False],
- [False, False, True, False],
- [False, False, True, False]]
-[[True, False, False, False],
+[[False, False, True, False],
  [False, False, True, False],
  [False, False, True, False],
  [False, False, False, True]]
-[[False, True, False, False],
+[[True, False, False, False],
  [False, True, False, False],
  [False, False, False, True],
  [False, False, False, True]]
 [[True, False, False, False],
- [False, False, True, False],
- [False, False, True, False],
- [True, False, False, False]]
-Solution 13 ...
-[[False, True, False, False],
  [False, True, False, False],
  [False, False, True, False],
  [False, True, False, False]]
 [[True, False, False, False],
- [False, False, True, False],
- [False, False, True, False],
- [False, False, False, True]]
-[[False, True, False, False],
- [False, True, False, False],
- [False, False, False, True],
- [False, False, False, True]]
-[[True, False, False, False],
- [False, False, True, False],
- [False, False, True, False],
- [True, False, False, False]]
-Solution 14 ...
-[[False, True, False, False],
- [False, True, False, False],
- [False, False, True, False],
- [False, False, False, True]]
-[[True, False, False, False],
- [False, False, True, False],
- [False, False, True, False],
- [False, False, False, True]]
-[[False, True, False, False],
- [False, True, False, False],
- [False, False, False, True],
- [False, False, False, True]]
-[[True, False, False, False],
- [False, False, True, False],
- [False, False, True, False],
- [True, False, False, False]]
-Solution 15 ...
-[[False, True, False, False],
- [False, True, False, False],
- [False, False, False, True],
- [False, False, False, True]]
-[[True, False, False, False],
- [False, False, False, True],
- [False, False, True, False],
- [False, False, False, True]]
-[[False, True, False, False],
- [False, True, False, False],
- [False, False, True, False],
- [False, False, True, False]]
-[[True, False, False, False],
- [False, False, False, True],
  [True, False, False, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+Solution 13 ...
+[[False, False, True, False],
+ [False, False, False, True],
+ [False, False, True, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, False, True],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, True, False, False]]
+[[True, False, False, False],
+ [True, False, False, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+Solution 14 ...
+[[False, False, True, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, False, True],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, True, False, False]]
+[[True, False, False, False],
+ [True, False, False, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+Solution 15 ...
+[[False, False, True, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, True, False, False]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, True, False, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, False, False, True],
+ [False, False, True, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [True, False, False, False]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
  [False, False, False, True]]
 Solution 16 ...
-[[False, True, False, False],
- [False, True, False, False],
- [False, True, False, False],
- [False, False, False, True]]
-[[True, False, False, False],
- [False, False, False, True],
- [False, False, True, False],
- [False, False, False, True]]
-[[False, True, False, False],
+[[False, False, True, False],
  [False, True, False, False],
  [False, False, True, False],
  [False, False, True, False]]
 [[True, False, False, False],
+ [False, True, False, False],
+ [False, True, False, False],
+ [False, False, False, True]]
+[[True, False, False, False],
  [False, False, False, True],
- [True, False, False, False],
+ [False, False, True, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [True, False, False, False]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
  [False, False, False, True]]
 Solution 17 ...
-[[False, True, False, False],
+[[False, False, True, False],
  [False, True, False, False],
  [False, False, True, False],
+ [False, False, False, True]]
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, True, False, False],
  [False, False, False, True]]
 [[True, False, False, False],
  [False, False, False, True],
  [False, False, True, False],
  [False, False, False, True]]
-[[False, True, False, False],
+[[True, False, False, False],
  [False, True, False, False],
  [False, False, True, False],
- [False, False, True, False]]
+ [True, False, False, False]]
 [[True, False, False, False],
- [False, False, False, True],
- [True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
  [False, False, False, True]]
