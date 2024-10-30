@@ -115,12 +115,15 @@ if __name__ == '__main__':
     mdp = MDP(n_states=n_states, n_actions=n_actions,P = P,gamma = gw.discount,horizon=10)
     
    
-    rm = RewardMachine("./rm_examples/patrol.txt")
+    rm = RewardMachine("./rm_examples/patrol_adv.txt")
 
     policy = {}
     for rms in range(rm.n_states):
         policy[rms] = f"p{rms}"
-    # print("The policy is: ", policy)
+    
+    policy[1] = policy[0]
+
+    print("The policy is: ", policy)
     # print(rm.delta_u)
     
 

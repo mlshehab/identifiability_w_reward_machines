@@ -4,8 +4,8 @@
 set -e
 
 # Run automate.py with depth set to 5
-echo "Running automate.py with depth 9..."
-python automate_ne.py -depth 9
+echo "Running automate.py with depth 7..."
+python automate_ne.py -depth 7
 echo "automate.py completed."
 
 # Run format_xml.py
