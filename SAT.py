@@ -325,14 +325,11 @@ if __name__ == '__main__':
     total_start_time = time.time()
 
     ce_set = [('B', 'AB'),
-        ('ABC', 'AC'),
         ('ABA', 'A'),
-        ('ABCD', 'ABD'),
         ('ABCB', 'B'),
         ('ABCB', 'AB'),
-        ('ABCDA', 'ABCA'),
+        ('ABCDC', 'ADC'),
         ('ABCDC', 'ABC'),
-        ('ABCDB', 'AB'),
         ('CB', 'AB'),
         ('ABC', 'C'),
         ('BC', 'ABC'),
