@@ -1,71 +1,71 @@
 <?xml version='1.0' encoding='utf-8'?>
 <StateTraces>
   <State_0>
-    <List_1>A, DA, ADCDA, CDCDA, BDA, DBDA, CBCDA</List_1>
-    <List_2>ADA, CDA, DADA, DCDA, ADADA, CDADA, BCDA, DBCDA, CBDA</List_2>
+    <List_1>A, ADCDA</List_1>
+    <List_2>ADA, ADADA, ADBDA</List_2>
     </State_0>
   <State_1>
-    <List_1>A, DA, BDA, ADCDA, DBDA, CBCDA, CDCDA, BDBDA</List_1>
-    <List_2>ADA, CDA, DADA, DCDA, BCDA, ADADA, DBCDA, CBDA, CDADA, ADBDA, DCBDA, BCBDA, BDADA, BDCDA</List_2>
+    <List_1>A, ADCDA</List_1>
+    <List_2>ADA, ADADA, ADBDA</List_2>
     </State_1>
   <State_2>
-    <List_1>A, DA, BDA, DBDA, BDBDA, ADCDA, CBCDA, CDCDA</List_1>
-    <List_2>ADA, DADA, CBDA, CDA, ADADA, ADBDA, DCBDA, DCDA, BCBDA, BCDA, BDADA, DBCDA, CDADA, CDBDA</List_2>
+    <List_1>A, ADCDA</List_1>
+    <List_2>ADA, ADADA, ADBDA</List_2>
     </State_2>
   <State_3>
-    <List_1>A, DA, BDA, DBDA, BDBDA</List_1>
-    <List_2>ADA, DADA, ADBDA, ADADA, CBDA, CDA, BDADA, DCBDA, DCDA, BCBDA, BCDA</List_2>
+    <List_1>A, ADCDA</List_1>
+    <List_2>ADA, ADBDA, ADADA</List_2>
     </State_3>
   <State_4>
-    <List_1>D, ADCD, CDCD, BD, DADCD, DCDCD, DBD, CBCD, ADBCD, DCBCD, BCDCD, BCBCD, BDBD</List_1>
-    <List_2>AD, CD, DAD, DCD, ADAD, CDAD, BCD, DADAD, DCDAD, DBCD, CBD, ADBD, DCBD, BCDAD, BCBD, BDAD, BDBCD, BDCD</List_2>
+    <List_1>AD, ADAD, ADBD</List_1>
+    <List_2>ADCD, ADBCD, ADCBD</List_2>
     </State_4>
   <State_5>
-    <List_1>D, BD, ADCD, DBD, CBCD, CDCD, ADBCD, DADCD, DCBCD, DCDCD, BCBCD, BCDCD, BDBD, ADCBD, DBDBD, CBCBD, CBDCD, CDBCD, CDCBD</List_1>
-    <List_2>AD, CD, DAD, DCD, BCD, ADAD, DBCD, CBD, CDAD, ADBD, DADAD, DCBD, DCDAD, BCBD, BCDAD, BDAD, BDBCD, BDCD, DADBD, DBCBD, DBDAD, DBDCD, CBDAD, CBDBD, CDBD</List_2>
+    <List_1>AD, ADAD, ADBD</List_1>
+    <List_2>ADCD, ADBCD, ADCBD</List_2>
     </State_5>
   <State_6>
-    <List_1>D, BD, DBD, BDBD, ADCBD, ADCD, DBDBD, CBCBD, CBCD, CDCBD, CDCD, ADBCD, DADCD, DCBCD, DCDCD, BCBCD, BCDCD</List_1>
-    <List_2>AD, DAD, CBD, CD, ADAD, ADBD, DCBD, DCD, BCBD, BCD, BDAD, DADAD, DADBD, DBCBD, DBCD, DBDAD, CBDAD, CBDBD, CDAD, CDBD, DCDAD, DCDBD, BCDAD, BCDBD, BDBCD, BDCBD, BDCD</List_2>
+    <List_1>AD, ADAD, ADBD</List_1>
+    <List_2>ADCBD, ADCD, ADBCD</List_2>
     </State_6>
   <State_7>
-    <List_1>D, BD, DBD, BDBD, DBDBD, ADCBD, ADCD, CBCBD, CBCD, CDCBD, CDCD</List_1>
-    <List_2>AD, DAD, ADBD, ADAD, CBD, CD, BDAD, DCBD, DCD, DBDAD, DADBD, DADAD, BCBD, BCD, DBCBD, DBCD, CBDBD, CBDAD, CDAD, CDBD</List_2>
+    <List_1>AD, ADBD, ADAD</List_1>
+    <List_2>ADCBD, ADCD, ADBCD</List_2>
     </State_7>
   <State_8>
-    <List_1>C, DC, BC, DBC, ADCDC, CDCDC, BDBC, BDC, DBDBC, DBDC, CBCDC</List_1>
-    <List_2>ADC, CDC, DADC, DCDC, CBC, ADADC, ADBC, DCBC, CDADC, BCDC, BCBC, ADCBC, DADBC, DBCDC, DBCBC, CBCBC, CBDBC, CBDC, CDBC, CDCBC</List_2>
+    <List_1>ADC, ADADC, ADBC, ADCBC, ADBDC</List_1>
+    <List_2>ADCDC</List_2>
     </State_8>
   <State_9>
-    <List_1>C, DC, BC, DBC, BDBC, BDC, ADCDC, DBDBC, DBDC, CBCDC, CDCDC, BDBDC</List_1>
-    <List_2>ADC, CBC, CDC, ADBC, DADC, DCBC, DCDC, BCBC, BCDC, ADADC, ADCBC, DADBC, DBCBC, DBCDC, CBCBC, CBDBC, CBDC, CDADC, CDBC, CDCBC, ADBDC, DCBDC, DCDBC, BCBDC, BCDBC, BDADC, BDCBC, BDCDC</List_2>
+    <List_1>ADC, ADBC, ADADC, ADCBC, ADBDC</List_1>
+    <List_2>ADCDC</List_2>
     </State_9>
   <State_10>
-    <List_1>B, DB, BDB, DBDB, BDBDB, ADCDB, CBCDB, CDCDB</List_1>
-    <List_2>CB, ADB, DCB, BCB, DADB, DBCB, CBDB, CDB, ADADB, ADBDB, DCBDB, DCDB, BCBDB, BCDB, BDADB, BDBCB, BDCB, DBCDB, DBDCB, CDADB, CDBDB</List_2>
-    <List_3>ADCB, CBCB, CDCB, ADBCB, DADCB, DCBCB, DCDCB, BCBCB, BCDCB, CBDCB, CDBCB</List_3>
+    <List_1>ADB, ADADB, ADBDB</List_1>
+    <List_2>ADCB, ADBCB</List_2>
+    <List_3>ADCDB</List_3>
     </State_10>
   <State_11>
-    <List_1>B, DB, BDB, DBDB, BDBDB</List_1>
-    <List_2>ADB, CB, DCB, DADB, BCB, ADBDB, ADADB, DBCB, CBDB, CDB, BDADB, DCBDB, DCDB, BCBDB, BCDB, BDBCB, BDCB</List_2>
-    <List_3>ADCB, CBCB, CDCB, ADBCB, DADCB, DCBCB, DCDCB, BCBCB, BCDCB</List_3>
+    <List_1>ADB, ADBDB, ADADB</List_1>
+    <List_2>ADCB, ADBCB</List_2>
+    <List_3>ADCDB</List_3>
     </State_11>
   <State_12>
-    <List_1>C, DC, BC, DBC, ADCDC, CDCDC, BDBC, BDC</List_1>
-    <List_2>ADC, CDC, CBC, DADC, DCDC, BCBC, ADADC, ADBC, DCBC, CDADC, BCDC, CBCBC</List_2>
+    <List_1>ADC, ADADC, ADBC, ADCBC, ADBDC</List_1>
+    <List_2>ADCDC</List_2>
     </State_12>
   <State_13>
-    <List_1>C, BC, DC, DBC, BDBC, BDC, ADCDC, DBDBC, DBDC, CBCDC, CDCDC</List_1>
-    <List_2>CBC, ADC, CDC, BCBC, ADBC, DADC, DCBC, DCDC, BCDC, CBCBC, ADADC, ADCBC, DADBC, DBCBC, DBCDC, CBDBC, CBDC, CDADC, CDBC, CDCBC</List_2>
+    <List_1>ADC, ADBC, ADADC, ADCBC, ADBDC</List_1>
+    <List_2>ADCDC</List_2>
     </State_13>
   <State_14>
-    <List_1>B, DB, BDB, DBDB, BDBDB</List_1>
-    <List_2>CB, BCB, ADB, DCB, DADB, DBCB, CBDB, CDB, ADADB, ADBDB, DCBDB, DCDB, BCBDB, BCDB, BDADB, BDBCB, BDCB</List_2>
-    <List_3>CBCB, ADCB, CDCB, BCBCB, ADBCB, DADCB, DCBCB, DCDCB, BCDCB</List_3>
+    <List_1>ADB, ADADB, ADBDB</List_1>
+    <List_2>ADCB, ADBCB</List_2>
+    <List_3>ADCDB</List_3>
     </State_14>
   <State_15>
-    <List_1>B, DB, BDB, DBDB, BDBDB</List_1>
-    <List_2>CB, ADB, BCB, DCB, DADB, ADBDB, ADADB, DBCB, CBDB, CDB, BDADB</List_2>
-    <List_3>CBCB, ADCB, CDCB, BCBCB</List_3>
+    <List_1>ADB, ADBDB, ADADB</List_1>
+    <List_2>ADCB, ADBCB</List_2>
+    <List_3>ADCDB</List_3>
     </State_15>
   </StateTraces>

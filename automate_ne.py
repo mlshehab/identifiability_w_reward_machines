@@ -163,9 +163,9 @@ if __name__ == '__main__':
     # The first time step here is assuming a fully supported starting distribution
     current_node, current_depth = queue.pop(0)  # Dequeue the next node
 
-    # starting_states = [9]
-    # for s in starting_states:
-    for s in range(mdp.n_states):
+    starting_states = [1]
+    for s in starting_states:
+    # for s in range(mdp.n_states):
         # get label of the state
         label = L[s]
         # create a node for that state
