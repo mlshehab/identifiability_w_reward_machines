@@ -2,24 +2,29 @@ import matplotlib.pyplot as plt
 import networkx as nx
 
 # Define the matrices and propositions
-matrices =[ [[False, False, False, True],
+matrices =[[False, False, False, True],
+ [False, True, False, False],
+ [False, True, False, False],
+ [False, False, False, True]],
+[[True, False, False, False],
+ [False, True, False, False],
+ [False, False, True, False],
+ [False, True, False, False]],
+[[True, False, False, False],
+ [False, False, True, False],
+ [False, False, True, False],
+ [False, False, False, True]],
+[[True, False, False, False],
  [False, True, False, False],
  [False, False, True, False],
  [False, False, False, True]],
 [[True, False, False, False],
  [False, True, False, False],
  [False, False, True, False],
- [False, False, True, False]],
-[[True, False, False, False],
- [False, True, False, False],
- [False, True, False, False],
- [False, False, False, True]],
-[[True, False, False, False],
- [True, False, False, False],
- [False, False, True, False],
- [False, False, False, True]] ]
+ [False, False, False, True]]
 
-propositions = ['A', 'B', 'C', 'D']
+
+propositions = ['A', 'B', 'C', 'D', 'H']
 
 # Number of nodes
 n = len(matrices[0])
