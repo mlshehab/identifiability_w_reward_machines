@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.patches as patches
 
 
-def plot_arrows(matrix, values, u,gamma):
+def plot_arrows(matrix, values, u,gamma, ax):
     n = matrix.shape[0]
     
     # Create a grid of points, offset by 0.5 to center the arrows
@@ -20,7 +20,7 @@ def plot_arrows(matrix, values, u,gamma):
     U[matrix == 3] = -1  # Left
     
     # Create the plot with a scale to reduce arrow size
-    fig, ax = plt.subplots(figsize=(8, 8))
+    # fig, ax = plt.subplots(figsize=(8, 8))
     
     # Add a green patch covering the 4 grid cells in the bottom left corner
     rect1 = patches.Rectangle((0, n-2), 2, 2, linewidth=1, edgecolor='none', facecolor='green', alpha=0.3)
@@ -50,6 +50,6 @@ def plot_arrows(matrix, values, u,gamma):
     ax.set_yticks(np.arange(0, n+1))
     ax.grid(True)
     ax.set_title(f"Policy for RM state $u = {u}$ and $\gamma= {gamma}$")
-    plt.show()
+    # plt.show()
 
 

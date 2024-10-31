@@ -233,7 +233,7 @@ def generate_combinations(traces_dict):
 if __name__ == '__main__':
 
     kappa = 4
-    AP = 4
+    AP = 5
     total_variables = kappa**2*AP
     total_constraints = 0
 
@@ -284,7 +284,7 @@ if __name__ == '__main__':
     #     s.add(element)
     
 
-    proposition2index = {'A':0, 'B':1 , 'C':2, 'D':3}
+    proposition2index = {'A':0, 'B':1 , 'C':2, 'D':3, 'H':4}
 
     def prefix2indices(s):
         out = []
@@ -362,7 +362,7 @@ if __name__ == '__main__':
 
 
 
-    n_counter = 16
+    n_counter = 9
     for state in range(n_counter):
         print(f"Currently in state {state}...")
         ce_set = counter_examples[state]
