@@ -115,7 +115,7 @@ if __name__ == '__main__':
     mdp = MDP(n_states=n_states, n_actions=n_actions,P = P,gamma = gw.discount,horizon=10)
     
    
-    rm = RewardMachine("./rm_examples/patrol_adv_adv.txt")
+    rm = RewardMachine("./rm_examples/patrol_adv.txt")
     print(f"rm.delta_u = {rm.delta_u}")
     policy = {}
     for rms in range(rm.n_states):
@@ -155,10 +155,10 @@ if __name__ == '__main__':
     # 3 7 11 15     A D B B 
     L = {}
 
-    L[2], L[6], L[3], L[7]     = 'A', 'D', 'A', 'D'
-    L[10], L[14], L[11], L[15] = 'B', 'B', 'B', 'B'
-    L[8], L[9], L[12], L[13]   = 'C', 'C', 'C', 'C'
-    L[0], L[1], L[4], L[5]     = 'A', 'A', 'D', 'D'
+    # L[2], L[6], L[3], L[7]     = 'A', 'D', 'A', 'D'
+    # L[10], L[14], L[11], L[15] = 'B', 'B', 'B', 'B'
+    # L[8], L[9], L[12], L[13]   = 'C', 'C', 'C', 'C'
+    # L[0], L[1], L[4], L[5]     = 'A', 'A', 'D', 'D'
     L[2]     = 'A'
     L[8] = 'B'
     L[6]= 'C'

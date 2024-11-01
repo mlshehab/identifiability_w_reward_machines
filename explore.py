@@ -9,6 +9,7 @@ from GridWorld import BasicGridWorld
 from plot import plot_arrows
 import pprint
 import matplotlib.pyplot as plt
+
 class Node:
     def __init__(self, label,state, u, policy, is_root = False):
         self.label = label
@@ -167,13 +168,13 @@ if __name__ == '__main__':
     mdp = MDP(n_states=n_states, n_actions=n_actions,P = P,gamma = gw.discount,horizon=10)
     
    
-    rm = RewardMachine("./rm_examples/patrol_adv.txt")
+    rm = RewardMachine("./rm_examples/patrol.txt")
 
     policy = {}
     for rms in range(rm.n_states):
         policy[rms] = f"p{rms}"
     # print("The policy is: ", policy)
-    # print(rm.delta_u)
+    print(rm.delta_u)
     
 
     # # The grid numbering and labeling is :
@@ -220,7 +221,7 @@ if __name__ == '__main__':
 
                 is_possible = mdp_.P[a][bar_s][bar_s_prime] > 0.0
 
-                if u == 4 and u_prime == 0 and L[s_prime] == 'D' and is_possible:
+                if u == 3 and u_prime == 0 and L[s_prime] == 'D' and is_possible:
 
                     reward[bar_s, a, bar_s_prime] = 10.0
 
