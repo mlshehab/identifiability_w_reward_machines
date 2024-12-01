@@ -384,7 +384,7 @@ if __name__ == '__main__':
                 s.add(Not(elt))
                 
         
-
+    print(f"we have a tortal of {total_constraints}!")
     # Use timedelta to format the elapsed time
     elapsed  = time.time() - total_start_time
     formatted_time = str(timedelta(seconds= elapsed))
@@ -396,7 +396,7 @@ if __name__ == '__main__':
     formatted_time = formatted_time.split('.')[0] + f":{milliseconds:03}"
     print(f"Adding C4 took {formatted_time} seconds.")
 
-    # # no
+    # # # no
    
     import time
     # start = time.time()
@@ -422,7 +422,8 @@ if __name__ == '__main__':
     while True:
         # Solve the problem
         if s.check() == sat:
-            
+            end = time.time()
+            print(f"The SAT solver took: {end-start} sec.")
             # Get the current solution
             m = s.model()
             

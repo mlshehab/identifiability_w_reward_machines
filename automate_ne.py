@@ -115,7 +115,7 @@ if __name__ == '__main__':
     mdp = MDP(n_states=n_states, n_actions=n_actions,P = P,gamma = gw.discount,horizon=10)
     
    
-    rm = RewardMachine("./rm_examples/patrol_adv.txt")
+    rm = RewardMachine("./rm_examples/patrol.txt")
     print(f"rm.delta_u = {rm.delta_u}")
     policy = {}
     for rms in range(rm.n_states):
@@ -130,6 +130,11 @@ if __name__ == '__main__':
     # 2 6 10 14     A D B B
     # 3 7 11 15     A D B B 
     L = {}
+
+    # L[2], L[6], L[3], L[7]     = 'A', 'A', 'A', 'A'
+    # L[10], L[14], L[11], L[15] = 'B', 'B', 'B', 'B'
+    # L[8], L[9], L[12], L[13]   = 'C', 'C', 'C', 'C'
+    # L[0], L[1], L[4], L[5]     = 'D', 'D', 'D', 'D'
 
     L[2], L[6], L[3], L[7]     = 'A', 'D', 'A', 'D'
     L[10], L[14], L[11], L[15] = 'B', 'B', 'B', 'B'
@@ -163,9 +168,9 @@ if __name__ == '__main__':
     # The first time step here is assuming a fully supported starting distribution
     current_node, current_depth = queue.pop(0)  # Dequeue the next node
 
-    starting_states = [1]
-    for s in starting_states:
-    # for s in range(mdp.n_states):
+    # starting_states = [1]
+    # for s in starting_states:
+    for s in range(mdp.n_states):
         # get label of the state
         label = L[s]
         # create a node for that state
@@ -282,7 +287,7 @@ if __name__ == '__main__':
 
         for label, policy in proposition_traces:
             # Check if the label is already in the set
-            if remove_consecutive_duplicates(label) not in unique_labels and len(remove_consecutive_duplicates(label))<=5:
+            if remove_consecutive_duplicates(label) not in unique_labels:
                 # If not, add it to the set and add the tuple to the unique list
                 unique_labels.add(remove_consecutive_duplicates(label))
                 unique_traces.append((remove_consecutive_duplicates(label), policy))
