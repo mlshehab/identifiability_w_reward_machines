@@ -232,7 +232,7 @@ def generate_combinations(traces_dict):
 
 if __name__ == '__main__':
 
-    kappa = 5
+    kappa = 4
     AP = 5
     total_variables = kappa**2*AP
     total_constraints = 0

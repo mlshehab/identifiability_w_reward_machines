@@ -115,7 +115,7 @@ if __name__ == '__main__':
     mdp = MDP(n_states=n_states, n_actions=n_actions,P = P,gamma = gw.discount,horizon=10)
     
    
-    rm = RewardMachine("./rm_examples/patrol_adv.txt")
+    rm = RewardMachine("./rm_examples/patrol.txt")
     print(f"rm.delta_u = {rm.delta_u}")
     policy = {}
     for rms in range(rm.n_states):
