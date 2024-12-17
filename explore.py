@@ -9,6 +9,7 @@ from GridWorld import BasicGridWorld
 from plot import plot_arrows
 import pprint
 import matplotlib.pyplot as plt
+
 class Node:
     def __init__(self, label,state, u, policy, is_root = False):
         self.label = label
