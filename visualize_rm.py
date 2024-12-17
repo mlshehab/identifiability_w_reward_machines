@@ -22,7 +22,7 @@ matrices = [
      [True, False, False, False]]
 ]
 
-propositions = ['A', 'B', 'C', 'D']
+propositions = ['A', 'B', 'C', 'D', 'H']
 
 # Number of nodes
 n = len(matrices[0])
