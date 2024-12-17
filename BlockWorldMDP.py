@@ -242,24 +242,33 @@ class BlocksWorldMDP:
         Each action has a separate transition matrix.
         Rows represent current states, and columns represent next states.
         """
-        # Enumerate all possible states
-        blocks = list(range(len(self.colors)))  # Represent blocks by indices [0, 1, ..., len(colors)-1]
-        all_pile_distributions = product(range(self.num_piles), repeat=len(blocks))  # Assign blocks to piles
+        # Generate all possible placements of blocks into piles
+        num_blocks = len(self.colors)
         all_states = set()
 
-        for distribution in all_pile_distributions:
+        # Step 1: Generate all possible placements of blocks into piles
+        for placement in product(range(self.num_piles), repeat=num_blocks):
             piles = [[] for _ in range(self.num_piles)]
-            for block, pile in zip(blocks, distribution):
-                piles[pile].append(block)
-            all_states.add(tuple(tuple(pile) for pile in piles))
+            for block_idx, pile_idx in enumerate(placement):
+                piles[pile_idx].append(block_idx)
 
+            # Step 2: Generate all permutations of blocks for the occupied piles
+            for permuted_blocks in permutations(range(num_blocks)):
+                permuted_piles = [[] for _ in range(self.num_piles)]
+                for idx, pile_idx in enumerate(placement):
+                    permuted_piles[pile_idx].append(permuted_blocks[idx])
+
+                # Convert to immutable state representation and add to set
+                state = tuple(tuple(pile) for pile in permuted_piles)
+                all_states.add(state)
+
+       
         all_states = list(all_states)
-        num_states = len(all_states)
-        self.num_states = num_states
-        print(f"The number of statessss is: {self.num_states}")
-        print(f"ALL states are:")
-        for s in all_states:
-            print(s)
+        for idx, s in enumerate(all_states):
+            if s[2] == () and s[3] == ():
+                print(f"idx = {idx} , s = {s}")
+
+        self.num_states, num_states = len(all_states), len(all_states)
 
         state_to_index = {state: idx for idx, state in enumerate(all_states)}
         index_to_state = {idx: state for state, idx in state_to_index.items()}
@@ -285,9 +294,6 @@ class BlocksWorldMDP:
                 moving_block = current_piles[from_pile].pop()
                 current_piles[to_pile].append(moving_block)
 
-                # Sort blocks in target pile to maintain canonical state representation
-                current_piles[to_pile].sort()
-
                 # Convert back to a tuple state representation
                 new_state = tuple(tuple(pile) for pile in current_piles)
 
@@ -302,7 +308,12 @@ class BlocksWorldMDP:
         return transition_matrices, state_to_index, index_to_state
 
 
-
+    def _cartesian_product(self, list_of_lists):
+        """Generate Cartesian product from a list of lists."""
+        result = [[]]
+        for lst in list_of_lists:
+            result = [x + [y] for x in result for y in lst]
+        return result
 
 
 # Example usage
