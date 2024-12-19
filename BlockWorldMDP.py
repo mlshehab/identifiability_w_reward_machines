@@ -6,8 +6,6 @@ from mdp import MDP, MDPRM
 from itertools import permutations, product
 
 def infinite_horizon_soft_bellman_iteration(MDP, reward,  tol = 1e-4, logging = True, log_iter = 5, policy_test_iter = 20):
-    
-
 
     gamma = MDP.gamma
     n_actions = MDP.n_actions
@@ -72,7 +70,7 @@ class BlocksWorldMDP:
         self.colors = ["green", "yellow", "red"]
         self.num_piles = 4
         self.stacking_pile = 0  # The target pile for stacking
-        self.num_actions = self.num_piles * (self.num_piles - 1)
+        self.num_actions = self.num_piles **2
         self.num_states = 0
         self.reward_target = 100
         self.reward_default = -1
@@ -214,6 +212,8 @@ class BlocksWorldMDP:
         # Populate transition matrices
         for action in range(self.num_actions):
             from_pile = action // self.num_piles
+            if from_pile == 3:
+                print("Take from 3")
             to_pile = action % self.num_piles
 
             for state_index, state in index_to_state.items():
@@ -249,26 +249,30 @@ class BlocksWorldMDP:
         # Step 1: Generate all possible placements of blocks into piles
         for placement in product(range(self.num_piles), repeat=num_blocks):
 
-            # piles = [[] for _ in range(self.num_piles)]
-
             for permuted_piles in permutations(range(num_blocks)):
                 # this iterates over all permutations, e..g (0,1,2) - (0,2,1) - etc. 
                 piles = [[] for _ in range(self.num_piles)]
+
                 for block_idx, pile_idx in zip(permuted_piles, placement):
                     piles[pile_idx].append(block_idx)
-                    # print(f"block_idx = {block_idx}, pile_idx = {pile_idx}")
-
+                  
                 state = tuple(tuple(pile) for pile in piles)
-
-                # print(f"Placement = {placement} --  piles = {piles} -- state = {state} -- len = {len(all_states)}")
 
                 all_states.append(state)
 
+        # all_states = list(set(all_states))
 
         self.num_states, num_states = len(all_states), len(all_states)
-
-        state_to_index = {state: idx for idx, state in enumerate(all_states)}
+        state_to_index = {}
+        idxx = 0
+        for state in all_states:
+            if state not in state_to_index.keys():
+                state_to_index[state] = idxx
+                idxx+=1
+       
         index_to_state = {idx: state for state, idx in state_to_index.items()}
+
+        self.num_states, num_states = len(state_to_index.keys()), len(state_to_index.keys())
 
         # Initialize transition matrices
         transition_matrices = np.zeros((self.num_actions, num_states, num_states))
@@ -331,8 +335,10 @@ if __name__ == "__main__":
     # Extract transition matrices
     transition_matrices,s2i, i2s = env.extract_transition_matrices_v2()
     print("Transition Matrices Shape:", transition_matrices.shape)
+    print(f"we have: {len(s2i.keys())} keys in i2s.")
 
-
+    # for k in i2s.items():
+    #     print(k)
     n_states = env.num_states
     # print(f"The n sss is: {n_states}")
     n_actions = env.num_actions
@@ -361,10 +367,12 @@ if __name__ == "__main__":
     # # print(f"The policy is: {soft_policy.shape}")
 
     # np.save("soft_policy.npy", soft_policy)
-    soft_policy = np.load("soft_policy.npy")
-    state = ((1,2),(0,),(),())
 
-    for i in range(15):
+    soft_policy = np.load("soft_policy.npy")
+
+    state = ((0, 2), (), (), (1,))
+
+    for i in range(5):
         ss2i = s2i[state]
         action = np.argmax(soft_policy[ss2i])
         # action = 0
@@ -376,7 +384,7 @@ if __name__ == "__main__":
         print(f"Next state is: {next_state_tuple}")
         state = next_state_tuple
 
-
+    
     #------------------------------------------------------------------
 
     # n_states = env.num_states

@@ -48,6 +48,6 @@ def format_xml(input_filename, output_filename=None):
 
 
 # Example usage
-input_file = "state_traces.xml"  # Replace with your input XML file path
-output_file = "state_traces.xml"  # Replace with your desired output file path
+input_file = "state_traces_blockworld.xml"  # Replace with your input XML file path
+output_file = "state_traces_blockworld.xml"  # Replace with your desired output file path
 format_xml(input_file, output_file)
